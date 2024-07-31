@@ -1,4 +1,7 @@
 <script>
+  import { page } from "$app/stores";
+  import { derived } from "svelte/store";
+
   export let title = "Dashboard";
 
   const handleWithdraw = () => {
@@ -16,14 +19,23 @@
   const handleProfile = () => {
     console.log("Profile clicked");
   };
+
+  const currentRoute = derived(page, ($page) => $page.url.pathname);
 </script>
 
 <header>
   <nav class="left">
-    <a href="/overview">Overview</a>
-    <a href="/transactions">Transactions</a>
-    <a href="/accounts">Credit Union Accounts</a>
-    <a href="/statements">Statements</a>
+    <a href="/teller" class:active={$currentRoute === "/teller"}>Overview</a>
+    <a
+      href="/teller/transactions"
+      class:active={$currentRoute === "/teller/transactions"}>Transactions</a
+    >
+    <a href="/accounts" class:active={$currentRoute === "/accounts"}
+      >Credit Union Accounts</a
+    >
+    <a href="/statements" class:active={$currentRoute === "/statements"}
+      >Statements</a
+    >
   </nav>
   <div class="center">
     <img src="/Finco-ops logo.png" alt="Logo" class="logo" />

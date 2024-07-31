@@ -4,5 +4,6 @@
 	"/manager": [],
 	"/second-manager": [],
 	"/super-admin": [],
-	"/teller": []
+	"/teller": [],
+	"/teller/transactions": []
 }

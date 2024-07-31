@@ -39,7 +39,7 @@ header {
     transform-origin: bottom right;
     transition: transform 0.25s ease-out;
   }
-  .left a:hover::after {
+  .left a:hover::after, .left a.active::after {
     transform: scaleX(1);
     transform-origin: bottom left;
   }
@@ -128,9 +128,11 @@ header {
   
   /* Main overview stlying */
 
-  main {
-    padding: 5rem;
-  }
+ 
+main {
+  padding: 2rem;
+  padding-top: 6rem; /* Adjust this value to the height of the header */
+}
   .overview {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -252,5 +254,121 @@ header {
     color: red;
   }
 
+/* Transactions css */
 
+.transactions-page {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: 2rem;
+}
+.filter-section {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.filter-section h2 {
+  margin-bottom: 1rem;
+}
+.clear-filters {
+  display: block;
+  margin-bottom: 1rem;
+  color: #007bff;
+  text-decoration: none;
+}
+.clear-filters:hover {
+  text-decoration: underline;
+}
+.filter-group {
+  margin-bottom: 1rem;
+}
+.filter-group h3 {
+  margin-bottom: 0.5rem;
+}
+.filter-group button {
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.filter-group button:hover {
+  background: #f0f0f0;
+}
+.transactions-section {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.transactions-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.transactions-header input {
+  width: 60%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.transactions-header select {
+  width: 35%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+th,
+td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+th {
+  background: #f9f9f9;
+}
+td.credit {
+  color: green;
+}
+td.debit {
+  color: red;
+}
+td.pending {
+  color: orange;
+}
+td['bm-approved'] {
+  color: blue;
+}
+td.approved {
+  color: green;
+}
+td.cancelled {
+  color: red;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.pagination button {
+  margin: 0 0.25rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  background: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.pagination button:hover {
+  background: #0056b3;
+}
    
