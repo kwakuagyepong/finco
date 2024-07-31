@@ -1,5 +1,5 @@
 <script>
-  export let title = "Finco Ops";
+  export let title = "Dashboard";
 
   const handleWithdraw = () => {
     console.log("Withdraw clicked");

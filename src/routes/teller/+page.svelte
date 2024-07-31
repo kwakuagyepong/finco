@@ -1,4 +1,6 @@
 <script>
+  import Header from "$lib/Header.svelte";
+
   // Mock data for accounts and transactions
   const accounts = [
     {
@@ -71,6 +73,8 @@
     },
   ];
 </script>
+
+<Header title="Teller Dashboard" />
 
 <main>
   <div class="overview">
