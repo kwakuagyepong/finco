@@ -1,5 +1,8 @@
 <script>
+  // @ts-nocheck
+
   import Header from "$lib/Header.svelte";
+  import { writable } from "svelte/store";
 
   // Mock data for transactions
   const transactions = [
@@ -104,6 +107,13 @@
       status: "Cancelled",
     },
   ];
+
+  // State for selected transaction
+  const selectedTransaction = writable(null);
+
+  const selectTransaction = (transaction) => {
+    selectedTransaction.set(transaction);
+  };
 </script>
 
 <Header title="Teller Dashboard" />
@@ -158,7 +168,7 @@
         </thead>
         <tbody>
           {#each transactions as transaction}
-            <tr>
+            <tr on:click={() => selectTransaction(transaction)}>
               <td>{transaction.origin}</td>
               <td>{transaction.destination}</td>
               <td>{transaction.date}</td>
@@ -182,5 +192,21 @@
         <button>Next</button>
       </div>
     </div>
+    {#if $selectedTransaction}
+      <div class="transaction-details">
+        <h3>Transaction Details</h3>
+        <p><strong>Origin:</strong> {$selectedTransaction.origin}</p>
+        <p><strong>Destination:</strong> {$selectedTransaction.destination}</p>
+        <p><strong>Date:</strong> {$selectedTransaction.date}</p>
+        <p><strong>Type:</strong> {$selectedTransaction.type}</p>
+        <p><strong>Amount:</strong> {$selectedTransaction.amount}</p>
+        <p>
+          <strong>Destination Type:</strong>
+          {$selectedTransaction.destinationType}
+        </p>
+        <p><strong>Status:</strong> {$selectedTransaction.status}</p>
+        <button class="disburse-funds">Disburse Funds</button>
+      </div>
+    {/if}
   </div>
 </main>
