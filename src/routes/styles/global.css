@@ -52,18 +52,7 @@ header {
     width: 150px;
     height: 50px;
   }
-  .center .title {
-    margin-left: 10px;
-  }
-  .center .title h1 {
-    margin: 0;
-    font-size: 1.5rem;
-  }
-  .center .title p {
-    margin: 0;
-    font-size: 0.875rem;
-    color: #555;
-  }
+ 
   .right button {
     margin-right: 1rem;
     background-color: white;
@@ -90,6 +79,7 @@ header {
     padding: 0.25rem;
   }
 
+  /* Deposit and Withdrawal button css */
   form {
     display: flex;
     flex-direction: column;
@@ -116,8 +106,6 @@ header {
     background: #0056b3;
   }
   
-  /* Main content padding to avoid overlap with fixed header */
-  /* Main content padding to avoid overlap with fixed header */
 
   /* Login page styles */
   .login-form {
@@ -154,8 +142,6 @@ header {
   }
   
   /* Main overview stlying */
-
- 
 main {
   padding: 2rem;
   padding-top: 6rem; /* Adjust this value to the height of the header */
