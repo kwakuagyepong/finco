@@ -84,15 +84,17 @@
           <h2>Accounts</h2>
           <a href="#">View all</a>
         </div>
-        <div class="accounts">
-          {#each accounts as account}
-            <div class="account-card">
-              <p>{account.name}</p>
-              <p>{account.number}</p>
-              <p>{account.location}</p>
-              <a href="#">Transactions →</a>
-            </div>
-          {/each}
+        <div class="accounts-container">
+          <div class="accounts">
+            {#each accounts as account}
+              <div class="account-card">
+                <p>{account.name}</p>
+                <p>{account.number}</p>
+                <p>{account.location}</p>
+                <a href="#">Transactions →</a>
+              </div>
+            {/each}
+          </div>
         </div>
       </div>
       <div class="withdrawals-section">

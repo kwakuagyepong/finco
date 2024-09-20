@@ -35,7 +35,9 @@
       href="/teller/transactions"
       class:active={$currentRoute === "/teller/transactions"}>Transactions</a
     >
-    <a href="/accounts" class:active={$currentRoute === "/accounts"}
+    <a
+      href="/teller/Credit Union Accounts"
+      class:active={$currentRoute === "/teller/Credit Union Accounts"}
       >Credit Union Accounts</a
     >
     <a href="/statements" class:active={$currentRoute === "/statements"}
