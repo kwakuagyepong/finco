@@ -1,38 +1,58 @@
-# create-svelte
+# Flask Auth Api (Login, Signup)
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+This is a simple Flask API for user registration (signup) and login with MySQL database.
 
-## Creating a project
+## Setup
 
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+1. Clone the repository:
 
 ```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+git clone https://github.com/Iam-Makafui/flask-auth-api.git
+cd flask-auth-api
 ```
 
-## Building
-
-To create a production version of your app:
+2. Create a virtual environment and activate it:
 
 ```bash
-npm run build
+python -m venv venv
+.\venv\Scripts\activate
 ```
 
-You can preview the production build with `npm run preview`.
+3. Install the dependencies:
+```bash
+pip install -r requirements.txt
+```
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+4. Set up your MySQL database and configure your connection in app/__init__.py.
+5. Run the application:
+
+```bash
+python run.py
+```
+
+The API will be available at http://127.0.0.1:5000.
+
+## API Endpoints
+
+### Create a New User
+
+**POST /users**
+
+- **Description:** Create a new user.
+- **Headers:**
+  - `Authorization: Bearer <valid_token>`
+- **Body Parameters:**
+  - `email`: (string) The email of the new user.
+  - `password`: (string) The password of the new user.
+
+
+### Login
+
+**GET /users**
+- **Description:** User login.
+- **Headers:**
+  - `Authorization: Bearer <valid_token>`
+
+  /:{email}/:{password}: Log in an existing user (requires a valid token in the Authorization header).
+
+
