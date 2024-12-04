@@ -38,6 +38,9 @@ def get_user(email, password):
     user = AuthenticationController.get_user(email, password)
     
     if user:
+        if user[5] == 'inactive':
+            return jsonify({'error': 'User is Inactive', 'status_ code': 403}), 403
+
         session['credit_union_name'] = user[3]
         return jsonify({'user': {'id': user[0], 'Credit Union': user[3], 'email': user[2], 'role': user[1], 'first_name': user[4], 'status': user[5]},  'status_code': 200}), 200
 
