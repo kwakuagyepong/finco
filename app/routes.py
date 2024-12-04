@@ -45,7 +45,7 @@ def get_user(email, password):
         return jsonify({'error': 'User not found', 'status_code': 404}), 404
     
     
-@authentication_blueprint.route('/api/creditunions', methods=['GET'])
+@authentication_blueprint.route('/api/creditunions', methods=['GET']) 
 def get_creditunion():
     results = CreditUnionmodel.get_credit_unions()
 
