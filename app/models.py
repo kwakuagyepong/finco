@@ -21,7 +21,7 @@ class Authentication:
     def get_a_user(email, password):
         with mysql.connection.cursor() as cursor:
             cursor.execute("""
-                 SELECT credentials.credencials_id, credentials.role, users_of_credit_union.email, users_of_credit_union.credit_union_id, users_of_credit_union.first_name FROM credentials INNER JOIN users_of_credit_union ON credentials.users_id = users_of_credit_union.credit_union_user_id WHERE users_of_credit_union.email = %s AND credentials.password = %s ORDER BY credentials.credencials_id DESC
+                 SELECT credentials.credencials_id, credentials.role, users_of_credit_union.email, users_of_credit_union.credit_union_id, users_of_credit_union.first_name, users_of_credit_union.status FROM credentials INNER JOIN users_of_credit_union ON credentials.users_id = users_of_credit_union.credit_union_user_id WHERE users_of_credit_union.email = %s AND credentials.password = %s ORDER BY credentials.credencials_id DESC
             """, (email, password))
             user = cursor.fetchone()
         return user 
