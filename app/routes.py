@@ -39,10 +39,24 @@ def get_user(email, password):
     
     if user:
         if user[5] == 'inactive':
-            return jsonify({'error': 'User is Inactive', 'status_ code': 403}), 403
+            return jsonify({'error': 'User is Inactive', 'status_ code': 402}), 402
 
+        # create a session for the credit union name
         session['credit_union_name'] = user[3]
-        return jsonify({'user': {'id': user[0], 'Credit Union': user[3], 'email': user[2], 'role': user[1], 'first_name': user[4], 'status': user[5]},  'status_code': 200}), 200
+        
+        if user[1] in ['admin', 'manager', 'teller']:
+            return jsonify({
+                'user': 
+                {
+                    'id': user[0],
+                    'Credit Union': user[3],
+                    'email': user[2],
+                    'role': user[1],
+                    'first_name': user[4],
+                    'status': user[5]
+                },'status_code': 200}), 200
+        else:
+            return jsonify({'error': 'User role not assigned', 'status_code': 403}), 403
 
     else:
         return jsonify({'error': 'User not found', 'status_code': 404}), 404
