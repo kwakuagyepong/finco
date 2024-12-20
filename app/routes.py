@@ -66,7 +66,13 @@ def get_user(email, password):
 
     else:
         return jsonify({'error': 'User not found', 'status_code': 404}), 404
+<<<<<<< HEAD
        
+=======
+    
+
+
+>>>>>>> b224b2aa4b775d604d91ff6e8aafb97cbb14a82f
 # Route to Signout 
 @authentication_blueprint.route('/api/signout', methods=['POST'])
 def signout():
@@ -178,7 +184,7 @@ def get_all_transactions_teller():
             ]
             return jsonify(formatted_transaction),200
         else:
-            return jsonify({'error': 'User not found', 'status_code': 404}), 404
+            return jsonify({'error': 'No Transactions found', 'status_code': 404}), 404
 
 
 # @authentication_blueprint.route('/api/all_transactions', methods=['GET'])
