@@ -45,16 +45,14 @@ class CreditUnionmodel:
         def get_credit_unions():
             with mysql.connection.cursor() as cursor:
                 cursor.execute("""
-                                SELECT * from creditunions WHERE Status = 'Enabled'
+                                SELECT `credit_union_id`, `name` FROM creditunions WHERE Status = 'Enabled'
                             """)
                 creditunion_result = cursor.fetchall()
-            
             return creditunion_result
 
 
 class all_transactions_teller:
     def get_transactions_all_teller(credit_union_id):
-        print("This is the SQL side:",credit_union_id)
         with mysql.connection.cursor() as cursor:
             cursor.execute("""
                                 SELECT `TRANSACTION_ID`, `CUSTOMER_FIRST_NAME`, `CUSTOMER_LAST_NAME`, 
@@ -63,7 +61,6 @@ class all_transactions_teller:
                                 WHERE `CREDIT_UNION_ORIGINATING_ID` = %s ;
             """, (credit_union_id,))
             transaction_result = cursor.fetchall()
-
         return transaction_result
         
         

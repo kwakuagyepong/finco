@@ -137,11 +137,7 @@ def get_creditunion():
             {
                 'results': {
                       'id': row[0], 
-                      'Credit Union': row[1],
-                      'Location': row[2], 
-                      'Phone Number': row[3], 
-                      'Email': row[4],
-                      'Status': row[5]
+                      'Credit Union': row[1]
                 },
                  'status_code': 200
             }
