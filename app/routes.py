@@ -65,11 +65,9 @@ def get_user(email, password):
     else:
         return jsonify({'error': 'User not found', 'status_code': 404}), 404
     
-<<<<<<< HEAD
-  # Route to Insert transaction 
-=======
 
-@authentication_blueprint.route('/signout', methods=['POST'])
+# Route to Signout 
+@authentication_blueprint.route('/api/signout', methods=['POST'])
 def signout():
     # Remove the user from session
     session.pop('credit_union_id', None)  # Remove the credit_union_id
@@ -78,7 +76,6 @@ def signout():
 
     
  # Route to Insert transaction 
->>>>>>> eaa93fc04ebf7be316dd2baeed135f5c748a4668
 @authentication_blueprint.route('/api/deposit', methods=['POST']) 
 def get_deposit():
     # Get data on transactions
