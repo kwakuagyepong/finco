@@ -66,9 +66,7 @@ def get_user(email, password):
 
     else:
         return jsonify({'error': 'User not found', 'status_code': 404}), 404
-    
-
-
+       
 # Route to Signout 
 @authentication_blueprint.route('/api/signout', methods=['POST'])
 def signout():
