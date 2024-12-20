@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request, session
 from app.controller import AuthenticationController
 from datetime import datetime
-# from flask_cors import CORS
+from flask_cors import CORS
 from app.models import CreditUnionmodel, all_transactions_teller, all_transaction_inbound, CreditUnion_deposit
 
 authentication_blueprint = Blueprint('users', __name__)
@@ -66,12 +66,6 @@ def get_user(email, password):
 
     else:
         return jsonify({'error': 'User not found', 'status_code': 404}), 404
-<<<<<<< HEAD
-    
-=======
-
-  # Route to Insert transaction 
->>>>>>> b53d0859a63450997839ff1aa7cc906fbaf0034a
 
 # Route to Signout 
 @authentication_blueprint.route('/api/signout', methods=['POST'])
