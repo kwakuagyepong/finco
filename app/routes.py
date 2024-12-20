@@ -8,6 +8,8 @@ authentication_blueprint = Blueprint('users', __name__)
  
 # CORS(authentication_blueprint) 
 
+
+
 # New route to signup
 @authentication_blueprint.route('/api/users', methods=['POST'])
 def add_user():
@@ -30,8 +32,6 @@ def add_user():
     else:
         return jsonify({'error': 'Failed to add user', 'status_code': 500}), 500
     
-
- 
     
 # Route to signin   
 @authentication_blueprint.route('/api/users/<string:email>/<string:password>', methods=['GET'])
@@ -66,7 +66,8 @@ def get_user(email, password):
 
     else:
         return jsonify({'error': 'User not found', 'status_code': 404}), 404
-    
+
+  # Route to Insert transaction 
 
 @authentication_blueprint.route('/signout', methods=['POST'])
 def signout():
@@ -117,6 +118,8 @@ def get_deposit():
 
      else:
          return jsonify({'Error': 'User ID not found to initialize transaction'})
+
+        
 
 
     
