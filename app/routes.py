@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request, session
 from app.controller import AuthenticationController
 from datetime import datetime
 # from flask_cors import CORS
-from app.models import CreditUnionmodel, all_transactions, all_transaction_inbound, CreditUnion_deposit
+from app.models import CreditUnionmodel, all_transactions_teller, all_transaction_inbound, CreditUnion_deposit
 
 authentication_blueprint = Blueprint('users', __name__)
  
@@ -45,6 +45,8 @@ def get_user(email, password):
         # create a session for the credit union ID and ID for Teller name
         session['credit_union_id'] = user[4]
         session['user_id'] = user[2]
+        session['teller'] = user[1]
+
         
         if user[1] in ['admin', 'manager', 'teller']:
             return jsonify({
@@ -145,24 +147,27 @@ def get_creditunion():
     else:
         return jsonify({'error': 'User not found', 'status_code': 404}), 404
     
-
-
-@authentication_blueprint.route('/api/all_transactions', methods=['GET'])
-def get_all_transactions():
-    if 'credit_union_id' in session:
+    
+# Show all transactions Viewed by Teller
+@authentication_blueprint.route('/api/all_transactions/teller', methods=['GET'])
+def get_all_transactions_teller():
+    if 'teller' in session:
         credit_union_id = session['credit_union_id']
+        # teller = session['teller']
+        print(credit_union_id)
 
-        transactions = all_transactions.get_transactions_all(credit_union_id)
+        transactions = all_transactions_teller.get_transactions_all_teller(credit_union_id)
 
         if transactions:
             formatted_transaction = [
-                {
+                { 
                     'result': {
                         'TRANSACTION_ID': row[0],
                         'CUSTOMER_FIRST_NAME' : row[1],
                         'CUSTOMER_LAST_NAME' : row[2],
                         'TRANSACTION_TYPE' : row[3],
                         'AMOUNT' : row[4],
+                        'CREDIT_UNION_DESTINATION_ID': row[5]
 
                     },
                     'status_code': 200
@@ -172,6 +177,33 @@ def get_all_transactions():
             return jsonify(formatted_transaction),200
         else:
             return jsonify({'error': 'User not found', 'status_code': 404}), 404
+
+
+# @authentication_blueprint.route('/api/all_transactions', methods=['GET'])
+# def get_all_transactions():
+#     if 'credit_union_id' in session:
+#         credit_union_id = session['credit_union_id']
+
+#         transactions = all_transactions.get_transactions_all(credit_union_id)
+
+#         if transactions:
+#             formatted_transaction = [
+#                 {
+#                     'result': {
+#                         'TRANSACTION_ID': row[0],
+#                         'CUSTOMER_FIRST_NAME' : row[1],
+#                         'CUSTOMER_LAST_NAME' : row[2],
+#                         'TRANSACTION_TYPE' : row[3],
+#                         'AMOUNT' : row[4],
+
+#                     },
+#                     'status_code': 200
+#                 }
+#                 for row in transactions
+#             ]
+#             return jsonify(formatted_transaction),200
+#         else:
+#             return jsonify({'error': 'User not found', 'status_code': 404}), 404
 
 
 
