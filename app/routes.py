@@ -121,10 +121,6 @@ def get_deposit():
         
 
 
-    
-
-
-
 @authentication_blueprint.route('/api/creditunions', methods=['GET']) 
 def get_creditunion():
     results = CreditUnionmodel.get_credit_unions()
