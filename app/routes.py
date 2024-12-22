@@ -120,14 +120,7 @@ def get_deposit():
 
         
 
-
-<<<<<<< HEAD
-    
-
-
-# Show all credit unions from transaction form (Start) 
-=======
->>>>>>> 40751f9f589eda77809e822527a839fd7870bffa
+# Show all credit unions from transaction form (START)   
 @authentication_blueprint.route('/api/creditunions', methods=['GET']) 
 def get_creditunion():
     results = CreditUnionmodel.get_credit_unions()
