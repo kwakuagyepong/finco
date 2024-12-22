@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request, session
 from app.controller import AuthenticationController
 from datetime import datetime
-from flask_cors import CORS
+# from flask_cors import CORS
 from app.models import CreditUnionmodel, all_transactions_teller, all_transaction_inbound, CreditUnion_deposit, all_transactions_on_transations_page_teller
 
 authentication_blueprint = Blueprint('users', __name__)
