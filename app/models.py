@@ -45,7 +45,7 @@ class CreditUnionmodel:
         def get_credit_unions():
             with mysql.connection.cursor() as cursor:
                 cursor.execute("""
-                                SELECT `credit_union_id`, `name` FROM creditunions WHERE Status = 'Enabled'
+                                SELECT `credit_union_id`, `name`, `address`, `phone_number`, `email` FROM creditunions WHERE Status = 'Enabled'
                             """)
                 creditunion_result = cursor.fetchall()
             return creditunion_result
