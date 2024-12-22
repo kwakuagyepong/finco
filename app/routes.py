@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request, session
 from app.controller import AuthenticationController
 from datetime import datetime
 from flask_cors import CORS
-from app.models import CreditUnionmodel, all_transactions_teller, all_transaction_inbound, CreditUnion_deposit
+from app.models import CreditUnionmodel, all_transactions_teller, all_transaction_inbound, CreditUnion_deposit, all_transactions_on_transations_page_teller
 
 authentication_blueprint = Blueprint('users', __name__)
  
@@ -124,7 +124,7 @@ def get_deposit():
     
 
 
-
+# Show all credit unions from transaction form (Start) 
 @authentication_blueprint.route('/api/creditunions', methods=['GET']) 
 def get_creditunion():
     results = CreditUnionmodel.get_credit_unions()
@@ -147,9 +147,36 @@ def get_creditunion():
         return jsonify(formatted),200
     else:
         return jsonify({'error': 'User not found', 'status_code': 404}), 404
+# Show all credit unions from transaction form (END)     
     
-    
-# Show all transactions Viewed by Teller
+
+# Show all credit unions on Credit Unions page (Currently by Teller page) (Start) 
+# @authentication_blueprint.route('/api/all_creditunions', methods=['GET']) 
+# def get_creditunion():
+#     results = CreditUnionmodel.get_credit_unions()
+
+#     if results:
+        
+#         formatted = [
+#             {
+#                 'results': {
+#                       'id': row[0], 
+#                       'Credit Union': row[1],
+#                       'Location': row[2], 
+#                       'Phone Number': row[3], 
+#                       'Email': row[4]
+#                 },
+#                  'status_code': 200
+#             }
+#             for row in results
+#         ]
+#         return jsonify(formatted),200
+#     else:
+#         return jsonify({'error': 'User not found', 'status_code': 404}), 404
+
+# Show all credit unions on Credit Unions page (Currently by Teller page) (END) 
+
+# Show all transactions Viewed by Teller (START)
 @authentication_blueprint.route('/api/all_transactions/teller', methods=['GET'])
 def get_all_transactions_teller():
     if 'teller' in session:
@@ -178,6 +205,45 @@ def get_all_transactions_teller():
             return jsonify(formatted_transaction),200
         else:
             return jsonify({'error': 'No Transactions found', 'status_code': 404}), 404
+# Show all transactions Viewed by Teller (END)
+
+# Show all transactions Viewed by Teller on Transactions page(START)
+@authentication_blueprint.route('/api/all_transactions_pending/teller', methods=['GET'])
+def get_all_transactions_teller_pending():
+    if 'teller' in session:
+        credit_union_id = session['credit_union_id']
+
+        # Fetch transactions
+        transactions_results = all_transactions_on_transations_page_teller.all_transactions_transactions_page_by_teller(credit_union_id)
+        print('Before edit', transactions_results)
+        
+        if transactions_results:
+            formatted_transaction = [
+                {  
+                    'result': {
+                        'AMOUNT' : row[4],
+                        'CREDIT_UNION_DESTINATION_ID': row[8],
+                        'CREDIT_UNION_ORIGINATING_ID': row[9],
+                        'CUSTOMER_FIRST_NAME' : row[1],
+                        'CUSTOMER_LAST_NAME' : row[2],
+                        'CUSTOMER_ID' : row[6],
+                        'TIMESTAMP': row[13],
+                        'TRANSACTION_ID': row[0],
+                        'TRANSACTION_TYPE' : row[3],
+                        'STATUS' : row[15]
+                    },
+                    'status_code': 200
+                }
+                for row in transactions_results
+            ]
+            return jsonify(formatted_transaction),200
+        else:
+            return jsonify({'error': 'No Transactions found', 'status_code': 404}), 404
+            
+    return jsonify({'error': 'User not Found', 'status_code': 404}), 404
+            
+# Show all transactions pending Viewed by Teller Dashboard (END)
+
 
 
 # @authentication_blueprint.route('/api/all_transactions', methods=['GET'])
