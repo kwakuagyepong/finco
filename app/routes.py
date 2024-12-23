@@ -208,9 +208,11 @@ def get_all_transactions_teller():
 def get_all_transactions_teller_pending():
     if 'teller' in session:
         credit_union_id = session['credit_union_id']
+        credit_union_id_repeat = credit_union_id
+        
 
         # Fetch transactions
-        transactions_results = all_transactions_on_transations_page_teller.all_transactions_transactions_page_by_teller(credit_union_id)
+        transactions_results = all_transactions_on_transations_page_teller.all_transactions_transactions_page_by_teller(credit_union_id,credit_union_id_repeat)
         print('Before edit', transactions_results)
         
         if transactions_results:
@@ -222,10 +224,13 @@ def get_all_transactions_teller_pending():
                         'CREDIT_UNION_ORIGINATING_ID': row[9],
                         'CUSTOMER_FIRST_NAME' : row[1],
                         'CUSTOMER_LAST_NAME' : row[2],
+                        'ACCOUNT_NUMBER' : row[5],
                         'CUSTOMER_ID' : row[6],
                         'TIMESTAMP': row[13],
                         'TRANSACTION_ID': row[0],
                         'TRANSACTION_TYPE' : row[3],
+                        'ORIGINATING_MANAGER_ID': row[11],
+                        'DESTINATION_MANAGER_ID': row[12],
                         'STATUS' : row[15]
                     },
                     'status_code': 200

@@ -65,7 +65,7 @@ class all_transactions_teller:
     
 # Transactions on Transation Page on teller account
 class all_transactions_on_transations_page_teller:
-    def all_transactions_transactions_page_by_teller(credit_union_id):
+    def all_transactions_transactions_page_by_teller(credit_union_id,credit_union_id_repeat):
         with mysql.connection.cursor() as cursor:
             cursor.execute("""
                                 SELECT 
@@ -76,8 +76,8 @@ class all_transactions_on_transations_page_teller:
                                         WHEN ORIGINATING_MANAGER_ID IS NULL AND DESTINATION_MANAGER_ID IS NOT NULL THEN 'BM Approved'
                                         WHEN ORIGINATING_MANAGER_ID IS NOT NULL AND DESTINATION_MANAGER_ID IS NOT NULL THEN 'Approved'
                                     END AS status
-                                    FROM transactions WHERE CREDIT_UNION_ORIGINATING_ID = %s;
-            """, (credit_union_id,))
+                                    FROM transactions WHERE CREDIT_UNION_ORIGINATING_ID = %s OR CREDIT_UNION_DESTINATION_ID = %s;
+            """, (credit_union_id,credit_union_id_repeat,))
             transaction_result = cursor.fetchall()
 
         return transaction_result
