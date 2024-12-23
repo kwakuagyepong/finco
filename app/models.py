@@ -62,6 +62,25 @@ class all_transactions_teller:
             """, (credit_union_id,))
             transaction_result = cursor.fetchall()
         return transaction_result
+    
+# Transactions on Transation Page on teller account
+class all_transactions_on_transations_page_teller:
+    def all_transactions_transactions_page_by_teller(credit_union_id):
+        with mysql.connection.cursor() as cursor:
+            cursor.execute("""
+                                SELECT 
+                                    *,
+                                    CASE
+                                        WHEN ORIGINATING_MANAGER_ID IS NULL AND DESTINATION_MANAGER_ID IS NULL THEN 'pending'
+                                        WHEN ORIGINATING_MANAGER_ID IS NOT NULL AND DESTINATION_MANAGER_ID IS NULL THEN 'OM Approved'
+                                        WHEN ORIGINATING_MANAGER_ID IS NULL AND DESTINATION_MANAGER_ID IS NOT NULL THEN 'BM Approved'
+                                        WHEN ORIGINATING_MANAGER_ID IS NOT NULL AND DESTINATION_MANAGER_ID IS NOT NULL THEN 'Approved'
+                                    END AS status
+                                    FROM transactions WHERE CREDIT_UNION_ORIGINATING_ID = %s;
+            """, (credit_union_id,))
+            transaction_result = cursor.fetchall()
+
+        return transaction_result
         
         
 
