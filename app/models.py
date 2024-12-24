@@ -68,15 +68,22 @@ class all_transactions_on_transations_page_teller:
     def all_transactions_transactions_page_by_teller(credit_union_id,credit_union_id_repeat):
         with mysql.connection.cursor() as cursor:
             cursor.execute("""
-                                SELECT 
-                                    *,
+                               SELECT 
+                                    t.*,
+                                    CONCAT(uo.first_name, ' ', uo.last_name) AS ORIGINATING_MANAGER_ID,
+                                    CONCAT(ud.first_name, ' ', ud.last_name) AS DESTINATION_MANAGER_ID,
                                     CASE
-                                        WHEN ORIGINATING_MANAGER_ID IS NULL AND DESTINATION_MANAGER_ID IS NULL THEN 'pending'
-                                        WHEN ORIGINATING_MANAGER_ID IS NOT NULL AND DESTINATION_MANAGER_ID IS NULL THEN 'OM Approved'
-                                        WHEN ORIGINATING_MANAGER_ID IS NULL AND DESTINATION_MANAGER_ID IS NOT NULL THEN 'BM Approved'
-                                        WHEN ORIGINATING_MANAGER_ID IS NOT NULL AND DESTINATION_MANAGER_ID IS NOT NULL THEN 'Approved'
+                                        WHEN t.ORIGINATING_MANAGER_ID IS NULL AND t.DESTINATION_MANAGER_ID IS NULL THEN 'pending'
+                                        WHEN t.ORIGINATING_MANAGER_ID IS NOT NULL AND t.DESTINATION_MANAGER_ID IS NULL THEN 'OM Approved'
+                                        WHEN t.ORIGINATING_MANAGER_ID IS NULL AND t.DESTINATION_MANAGER_ID IS NOT NULL THEN 'DM Approved'
+                                        WHEN t.ORIGINATING_MANAGER_ID IS NOT NULL AND t.DESTINATION_MANAGER_ID IS NOT NULL THEN 'Approved'
                                     END AS status
-                                    FROM transactions WHERE CREDIT_UNION_ORIGINATING_ID = %s OR CREDIT_UNION_DESTINATION_ID = %s;
+                                FROM transactions t
+                                LEFT JOIN users_of_credit_union uo 
+                                    ON t.ORIGINATING_MANAGER_ID = uo.credit_union_user_id
+                                LEFT JOIN users_of_credit_union ud 
+                                    ON t.DESTINATION_MANAGER_ID = ud.credit_union_user_id
+                                WHERE t.CREDIT_UNION_ORIGINATING_ID = %s OR t.CREDIT_UNION_DESTINATION_ID = %s;
             """, (credit_union_id,credit_union_id_repeat,))
             transaction_result = cursor.fetchall()
 

@@ -229,9 +229,9 @@ def get_all_transactions_teller_pending():
                         'TIMESTAMP': row[13],
                         'TRANSACTION_ID': row[0],
                         'TRANSACTION_TYPE' : row[3],
-                        'ORIGINATING_MANAGER_ID': row[11],
-                        'DESTINATION_MANAGER_ID': row[12],
-                        'STATUS' : row[15]
+                        'ORIGINATING_MANAGER_ID': row[15],
+                        'DESTINATION_MANAGER_ID': row[16],
+                        'STATUS' : row[17]
                     },
                     'status_code': 200
                 }
