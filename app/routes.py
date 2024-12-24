@@ -217,7 +217,7 @@ def get_all_transactions_teller_pending():
         
         if transactions_results:
             formatted_transaction = [
-                {  
+                {   
                     'result': {
                         'AMOUNT' : row[4],
                         'CREDIT_UNION_DESTINATION_ID': row[8],
