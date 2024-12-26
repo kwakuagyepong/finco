@@ -45,7 +45,19 @@ class CreditUnionmodel:
         def get_credit_unions():
             with mysql.connection.cursor() as cursor:
                 cursor.execute("""
-                                SELECT `credit_union_id`, `name`, `address`, `phone_number`, `email` FROM creditunions WHERE Status = 'Enabled'
+                                SELECT 
+                                    cu.credit_union_id, 
+                                    cu.name, 
+                                    cu.address, 
+                                    cu.phone_number, 
+                                    cu.email,
+                                    CONCAT(uoc.first_name, ' ', uoc.last_name) AS manager_name
+                                FROM creditunions cu
+                                INNER JOIN users_of_credit_union uoc 
+                                    ON cu.credit_union_id = uoc.credit_union_id
+                                INNER JOIN credentials c 
+                                    ON uoc.credit_union_user_id = c.Users_ID
+                                WHERE c.role = 'manager';
                             """)
                 creditunion_result = cursor.fetchall()
             return creditunion_result
