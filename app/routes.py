@@ -134,10 +134,7 @@ def get_creditunion():
                       'Credit Union': row[1],
                       'Location': row[2], 
                       'Phone Number': row[3], 
-                      'Email': row[4],
-                      'manager_name': row[5],
-                      'dfgdg': row[6],
-                      'sfdgdfg': row[7] 
+                      'Email': row[4]
                 },
                  'status_code': 200
             }
