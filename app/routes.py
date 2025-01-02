@@ -65,7 +65,7 @@ def get_user(email, password):
             return jsonify({'error': 'User role not assigned', 'status_code': 403}), 403
 
     else:
-        return jsonify({'error': 'User not found', 'status_code': 404}), 404
+        return jsonify({'error': 'Wrong email or password', 'status_code': 404}), 404
        
 # Route to Signout 
 @authentication_blueprint.route('/api/signout', methods=['POST'])
@@ -135,7 +135,9 @@ def get_creditunion():
                       'Location': row[2], 
                       'Phone Number': row[3], 
                       'Email': row[4],
-                      'manager_name': row[5]
+                      'manager_name': row[5],
+                      'dfgdg': row[6],
+                      'sfdgdfg': row[7] 
                 },
                  'status_code': 200
             }
