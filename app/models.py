@@ -49,6 +49,15 @@ class CreditUnionmodel:
                             """)
                 creditunion_result = cursor.fetchall()
             return creditunion_result
+        
+class disbursingfunds:
+    def get_funds_transaction(transaction_ID):
+        with mysql.connection.cursor() as cursor:
+            cursor.execute("""
+                            SELECT * FROM transactions WHERE TRANSACTION_ID = %s ; 
+                           """, (transaction_ID))
+            full_confirmation = cursor.fetchone()
+        return full_confirmation
 
 
 class all_transactions_teller:
@@ -101,6 +110,31 @@ class all_transaction_inbound:
             transaction_result = cursor.fetchall()
 
         return transaction_result    
+    
+
+class users_of_credit_union:
+    def get_users_of_credit_union(user_id_session):
+        with mysql.connection.cursor() as cursor:
+            cursor.execute("""
+                            SELECT * FROM users_of_credit_union WHERE users_of_credit_union = %s ; 
+                           """, (user_id_session))
+            get_user = cursor.fetchone()
+        return get_user
+    
+
+class update_transaction:
+    def get_update_transaction(user_id_session,transaction_ID):
+        try:
+            cursor = mysql.connection.cursor()
+            cursor.execute("UPDATE transactions SET ORIGINATING_MANAGER_ID = %s, WHERE TRANSACTION_ID = %s",
+                           (user_id_session,transaction_ID))
+            mysql.connection.commit()
+            cursor.close()
+            return {'Updated': user_id_session} 
+        except Exception as e:
+            print(e)  
+            return None
+
 
 
 

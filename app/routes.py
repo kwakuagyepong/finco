@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request, session
 from app.controller import AuthenticationController
 from datetime import datetime
 # from flask_cors import CORS
-from app.models import CreditUnionmodel, all_transactions_teller, all_transaction_inbound, CreditUnion_deposit, all_transactions_on_transations_page_teller
+from app.models import CreditUnionmodel, all_transactions_teller, all_transaction_inbound, CreditUnion_deposit, all_transactions_on_transations_page_teller, disbursingfunds, users_of_credit_union, update_transaction
 
 authentication_blueprint = Blueprint('users', __name__)
  
@@ -117,6 +117,76 @@ def get_deposit():
 
      else:
          return jsonify({'Error': 'User ID not found to initialize transaction'})
+
+
+@authentication_blueprint.route('/api/disbursefunds', methods=['GET'])
+def get_funds_data():
+    required_fields = ['transaction_ID'] 
+    data = request.json
+    missing_fields = [field for field in required_fields if field not in data]
+
+    if missing_fields:
+        error_message = f"Missing fields: {', '.join(missing_fields)}"
+        return jsonify({'error': error_message, 'status_code': 400}), 400
+    
+    transaction_ID = data['transaction_ID']
+    full_data = disbursingfunds.get_funds_transaction(transaction_ID)
+
+    if full_data:
+        ORIGINATING_MANAGER_ID = full_data.get('ORIGINATING_MANAGER_ID')
+        DESTINATION_MANAGER_ID = full_data.get('DESTINATION_MANAGER_ID')
+
+        if not ORIGINATING_MANAGER_ID or not DESTINATION_MANAGER_ID:
+            return jsonify({
+                'error': 'error releasing funds. Transaction has not being approved',
+                'status_code': 400
+            }), 400    
+
+        # If both IDs are present, proceed with the response
+        return jsonify({'data': full_data, 'status_code': 200}), 200
+    
+    return jsonify({'error': 'Transaction not found.', 'status_code': 404}), 404
+
+
+@authentication_blueprint.route('/api/approve_transaction', methods=['GET'])
+def get_approve_transaction():
+    if 'manager' in session:
+
+            user_id_session = session['user_id']
+            # credit_id = session['credit_union_id']
+
+            required_fields = ['transaction_ID']
+            required_fields = ['CREDIT_UNION_ORIGINATING_ID']
+             
+            data = request.json
+            missing_fields = [field for field in required_fields if field not in data]
+
+            if missing_fields:
+                error_message = f"Missing fields: {', '.join(missing_fields)}"
+                return jsonify({'error': error_message, 'status_code': 400}), 400
+            
+            transaction_ID = data['transaction_ID']
+            CREDIT_UNION_ORIGINATING_ID = data['CREDIT_UNION_ORIGINATING_ID']
+            user_result = users_of_credit_union.get_users_of_credit_union(user_id_session)
+
+            if user_result:
+                credit_union_id = user_result.get('credit_union_id')
+
+                if credit_union_id == CREDIT_UNION_ORIGINATING_ID:
+                    updated_transaction = update_transaction.get_update_transaction(user_id_session,transaction_ID)
+                    if updated_transaction:
+                        return jsonify({'message': 'Transaction Approved', 'status_code': 200}), 200
+                    else:
+                        return jsonify({'error': 'Failed to Approve', 'status_code': 500}), 500
+
+    return jsonify({'error': 'User is not a manager', 'status_code': 404}), 404
+
+
+
+
+
+
+
 
         
 
@@ -275,30 +345,30 @@ def get_all_transactions_teller_pending():
 
 
 
-@authentication_blueprint.route('/api/all_inbound', methods=['GET'])
-def get_all_inbound_transactions():
-    if 'credit_union_id' in session:
-        credit_union_id = session['credit_union_id']
+# @authentication_blueprint.route('/api/all_inbound', methods=['GET'])
+# def get_all_inbound_transactions():
+#     if 'credit_union_id' in session:
+#         credit_union_id = session['credit_union_id']
 
-        transactions_inbound = all_transaction_inbound.get_inbound_transactions_all(credit_union_id)
+#         transactions_inbound = all_transaction_inbound.get_inbound_transactions_all(credit_union_id)
 
-        if transactions_inbound:
-            formatted_transaction = [
-                {
-                    'result': {
-                        'TRANSACTION_ID': row[0],
-                        'CUSTOMER_FIRST_NAME' : row[1],
-                        'CUSTOMER_LAST_NAME' : row[2],
-                        'TRANSACTION_TYPE' : row[3],
-                        'AMOUNT' : row[4],
+#         if transactions_inbound:
+#             formatted_transaction = [
+#                 {
+#                     'result': {
+#                         'TRANSACTION_ID': row[0],
+#                         'CUSTOMER_FIRST_NAME' : row[1],
+#                         'CUSTOMER_LAST_NAME' : row[2],
+#                         'TRANSACTION_TYPE' : row[3],
+#                         'AMOUNT' : row[4],
 
-                    },
-                    'status_code': 200
-                }
-                for row in transactions_inbound
-            ]
-            return jsonify(formatted_transaction),200
-        else:
-            return jsonify({'error': 'User not found', 'status_code': 404}), 404
+#                     },
+#                     'status_code': 200
+#                 }
+#                 for row in transactions_inbound
+#             ]
+#             return jsonify(formatted_transaction),200
+#         else:
+#             return jsonify({'error': 'User not found', 'status_code': 404}), 404
         
 
