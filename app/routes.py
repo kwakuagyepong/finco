@@ -45,7 +45,7 @@ def get_user(email, password):
         # create a session for the credit union ID and ID for Teller name
         session['credit_union_id'] = user[4]
         session['user_id'] = user[2]
-        session['teller'] = user[1]
+        session['role'] = user[1]
 
         
         if user[1] in ['admin', 'manager', 'teller']:
@@ -150,9 +150,12 @@ def get_funds_data():
 
 @authentication_blueprint.route('/api/approve_transaction', methods=['GET'])
 def get_approve_transaction():
-    if 'manager' in session:
+    user_role = session['role']
+    role_assigned = "manager"
+    if user_role == role_assigned:
 
             user_id_session = session['user_id']
+            
             # credit_id = session['credit_union_id']
 
             required_fields = ['transaction_ID']
@@ -178,6 +181,13 @@ def get_approve_transaction():
                         return jsonify({'message': 'Transaction Approved', 'status_code': 200}), 200
                     else:
                         return jsonify({'error': 'Failed to Approve', 'status_code': 500}), 500
+                else: 
+                    updated_transaction1 = update_transaction.get_update_transaction(user_id_session,transaction_ID)
+                    if updated_transaction1:
+                        return jsonify({'message': 'Transaction Approved', 'status_code': 200}), 200
+                    else:
+                        return jsonify({'error': 'Failed to Approve', 'status_code': 500}), 500
+            return  
 
     return jsonify({'error': 'User is not a manager', 'status_code': 404}), 404
 

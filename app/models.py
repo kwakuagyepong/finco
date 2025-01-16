@@ -134,6 +134,21 @@ class update_transaction:
         except Exception as e:
             print(e)  
             return None
+    
+    def get_update_transaction_destination_manager(user_id_session,transaction_ID):
+        try:
+            cursor = mysql.connection.cursor()
+            cursor.execute("UPDATE transactions SET DESTINATION_MANAGER_ID = %s, WHERE TRANSACTION_ID = %s",
+                           (user_id_session,transaction_ID))
+            mysql.connection.commit()
+            cursor.close()
+            return {'Updated': user_id_session} 
+        except Exception as e:
+            print(e)  
+            return None
+        
+
+
 
 
 
