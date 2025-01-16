@@ -10,6 +10,7 @@ authentication_blueprint = Blueprint('users', __name__)
 
 
 
+
 # New route to signup
 @authentication_blueprint.route('/api/users', methods=['POST'])
 def add_user():
@@ -39,8 +40,8 @@ def get_user(email, password):
     user = AuthenticationController.get_user(email, password)
     
     if user:
-        if user[5] == 'inactive':
-            return jsonify({'error': 'User is Inactive', 'status_ code': 402}), 402
+        if user[6] == 'inactive':
+            return jsonify({'error': 'User is Inactive', 'status_code': 402}), 402
 
         # create a session for the credit union ID and ID for Teller name
         session['credit_union_id'] = user[4]
@@ -148,7 +149,7 @@ def get_funds_data():
     return jsonify({'error': 'Transaction not found.', 'status_code': 404}), 404
 
 
-@authentication_blueprint.route('/api/approve_transaction', methods=['GET'])
+@authentication_blueprint.route('/api/approve_transaction', methods=['POST'])
 def get_approve_transaction():
     user_role = session['role']
     role_assigned = "manager"
@@ -214,7 +215,7 @@ def get_creditunion():
                       'Credit Union': row[1],
                       'Location': row[2], 
                       'Phone Number': row[3], 
-                      'Email': row[4]
+                      'Email': row[4],
                 },
                  'status_code': 200
             }
