@@ -149,7 +149,7 @@ def get_funds_data():
     return jsonify({'error': 'Transaction not found.', 'status_code': 404}), 404
 
 
-@authentication_blueprint.route('/api/approve_transaction', methods=['GET'])
+@authentication_blueprint.route('/api/approve_transaction', methods=['POST'])
 def get_approve_transaction():
     if 'manager' in session:
 
@@ -205,11 +205,7 @@ def get_creditunion():
                       'Credit Union': row[1],
                       'Location': row[2], 
                       'Phone Number': row[3], 
-<<<<<<< HEAD
                       'Email': row[4],
-=======
-                      'Email': row[4]
->>>>>>> ced1929c85b1719c46712b5e3016a8880028df17
                 },
                  'status_code': 200
             }
