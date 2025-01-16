@@ -117,9 +117,13 @@ class users_of_credit_union:
         with mysql.connection.cursor() as cursor:
             cursor.execute("""
                             SELECT * FROM users_of_credit_union WHERE credit_union_user_id = %s ; 
+<<<<<<< HEAD
                            """, (user_id_session,))
+=======
+            """, (user_id_session,))
+>>>>>>> 594399b6d20947192348b56e2510dc502d27c471
             get_user = cursor.fetchone()
-        print("Method result", get_user)    
+            
         return get_user
     
 
@@ -127,7 +131,7 @@ class update_transaction:
     def get_update_transaction(user_id_session,transaction_ID):
         try:
             cursor = mysql.connection.cursor()
-            cursor.execute("UPDATE transactions SET ORIGINATING_MANAGER_ID = %s, WHERE TRANSACTION_ID = %s",
+            cursor.execute("UPDATE transactions SET ORIGINATING_MANAGER_ID = %s WHERE TRANSACTION_ID = %s",
                            (user_id_session,transaction_ID))
             mysql.connection.commit()
             cursor.close()
@@ -139,7 +143,7 @@ class update_transaction:
     def get_update_transaction_destination_manager(user_id_session,transaction_ID):
         try:
             cursor = mysql.connection.cursor()
-            cursor.execute("UPDATE transactions SET DESTINATION_MANAGER_ID = %s, WHERE TRANSACTION_ID = %s",
+            cursor.execute("UPDATE transactions SET DESTINATION_MANAGER_ID = %s WHERE TRANSACTION_ID = %s",
                            (user_id_session,transaction_ID))
             mysql.connection.commit()
             cursor.close()

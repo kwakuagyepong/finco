@@ -153,11 +153,11 @@ def get_funds_data():
 def get_approve_transaction():
     user_role = session['role']
     role_assigned = "manager"
-    print("Role", role_assigned)
+    
     if user_role == role_assigned:
 
             user_id_session = session['user_id']
-            print("User ID", user_id_session)
+            
             # credit_id = session['credit_union_id']
 
             required_fields = ['transaction_ID']
@@ -174,13 +174,12 @@ def get_approve_transaction():
             
             transaction_ID = data['transaction_ID']
             CREDIT_UNION_ORIGINATING_ID = data['CREDIT_UNION_ORIGINATING_ID']
-            print("Transaction ID", transaction_ID)
-            print("Credit UnionID", CREDIT_UNION_ORIGINATING_ID)
+            
             user_result = users_of_credit_union.get_users_of_credit_union(user_id_session)
             print("Main Result", user_result)
             if user_result:
-                credit_union_id = user_result.get('credit_union_id')
-
+                credit_union_id = user_result('credit_union_id')
+                print("credit_union_id", credit_union_id)
                 if credit_union_id == CREDIT_UNION_ORIGINATING_ID:
                     updated_transaction = update_transaction.get_update_transaction(user_id_session,transaction_ID)
                     print("Result1", updated_transaction)
