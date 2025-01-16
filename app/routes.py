@@ -183,7 +183,7 @@ def get_approve_transaction():
                     else:
                         return jsonify({'error': 'Failed to Approve', 'status_code': 500}), 500
                 else: 
-                    updated_transaction1 = update_transaction.get_update_transaction(user_id_session,transaction_ID)
+                    updated_transaction1 = update_transaction.get_update_transaction_destination_manager(user_id_session,transaction_ID)
                     if updated_transaction1:
                         return jsonify({'message': 'Transaction Approved', 'status_code': 200}), 200
                     else:
