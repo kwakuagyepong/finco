@@ -157,7 +157,7 @@ def get_approve_transaction():
     if user_role == role_assigned:
 
             user_id_session = session['user_id']
-             
+            print("User ID", user_id_session)
             # credit_id = session['credit_union_id']
 
             required_fields = ['transaction_ID']
@@ -188,7 +188,7 @@ def get_approve_transaction():
                         return jsonify({'message': 'Transaction Approved', 'status_code': 200}), 200
                     else:
                         return jsonify({'error': 'Failed to Approve', 'status_code': 500}), 500
-                else: 
+                else:                                                                                                                       
                     updated_transaction1 = update_transaction.get_update_transaction_destination_manager(user_id_session,transaction_ID)
                     print("Result2", updated_transaction1)
                     if updated_transaction1:
@@ -259,7 +259,7 @@ def get_all_transactions_teller():
     if 'teller' in session:
         credit_union_id = session['credit_union_id']
         # teller = session['teller']
-        print(credit_union_id)
+        # print(credit_union_id)
 
         transactions = all_transactions_teller.get_transactions_all_teller(credit_union_id)
 
@@ -294,7 +294,7 @@ def get_all_transactions_teller_pending():
 
         # Fetch transactions
         transactions_results = all_transactions_on_transations_page_teller.all_transactions_transactions_page_by_teller(credit_union_id,credit_union_id_repeat)
-        print('Before edit', transactions_results)
+        # print('Before edit', transactions_results)
         
         if transactions_results:
             formatted_transaction = [

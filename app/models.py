@@ -119,6 +119,7 @@ class users_of_credit_union:
                             SELECT * FROM users_of_credit_union WHERE users_of_credit_union = %s ; 
                            """, (user_id_session))
             get_user = cursor.fetchone()
+        print("Method result", get_user)    
         return get_user
     
 
