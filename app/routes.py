@@ -182,14 +182,7 @@ def get_approve_transaction():
 
     return jsonify({'error': 'User is not a manager', 'status_code': 404}), 404
 
-
-
-
-
-
-
-
-        
+    
 
 # Show all credit unions from transaction form (START)   
 @authentication_blueprint.route('/api/creditunions', methods=['GET']) 
