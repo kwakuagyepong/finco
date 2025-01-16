@@ -116,8 +116,8 @@ class users_of_credit_union:
     def get_users_of_credit_union(user_id_session):
         with mysql.connection.cursor() as cursor:
             cursor.execute("""
-                            SELECT * FROM users_of_credit_union WHERE users_of_credit_union = %s ; 
-                           """, (user_id_session))
+                            SELECT * FROM users_of_credit_union WHERE credit_union_user_id = %s ; 
+                           """, (user_id_session,))
             get_user = cursor.fetchone()
         print("Method result", get_user)    
         return get_user
