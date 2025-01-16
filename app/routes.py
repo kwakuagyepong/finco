@@ -105,7 +105,7 @@ def get_deposit():
         teller_name_id = user_id_session
         date = datetime.now().date()
         
-        print('destination id', credit_union_destination_id)
+        # print('destination id', credit_union_destination_id)
         full_transaction = CreditUnion_deposit.push_transaction_desopit(first_name, last_name, transaction_type, amount, account_number, customer_id_number, customer_id_image, credit_union_destination_id, credit_union_originating_id, teller_name_id, date)
 
         if full_transaction:
@@ -153,14 +153,17 @@ def get_funds_data():
 def get_approve_transaction():
     user_role = session['role']
     role_assigned = "manager"
+    print("Role", role_assigned)
     if user_role == role_assigned:
 
             user_id_session = session['user_id']
-            
+             
             # credit_id = session['credit_union_id']
 
             required_fields = ['transaction_ID']
             required_fields = ['CREDIT_UNION_ORIGINATING_ID']
+
+            
              
             data = request.json
             missing_fields = [field for field in required_fields if field not in data]
@@ -171,24 +174,28 @@ def get_approve_transaction():
             
             transaction_ID = data['transaction_ID']
             CREDIT_UNION_ORIGINATING_ID = data['CREDIT_UNION_ORIGINATING_ID']
+            print("Transaction ID", transaction_ID)
+            print("Credit UnionID", CREDIT_UNION_ORIGINATING_ID)
             user_result = users_of_credit_union.get_users_of_credit_union(user_id_session)
-
+            print("Main Result", user_result)
             if user_result:
                 credit_union_id = user_result.get('credit_union_id')
 
                 if credit_union_id == CREDIT_UNION_ORIGINATING_ID:
                     updated_transaction = update_transaction.get_update_transaction(user_id_session,transaction_ID)
+                    print("Result1", updated_transaction)
                     if updated_transaction:
                         return jsonify({'message': 'Transaction Approved', 'status_code': 200}), 200
                     else:
                         return jsonify({'error': 'Failed to Approve', 'status_code': 500}), 500
                 else: 
                     updated_transaction1 = update_transaction.get_update_transaction_destination_manager(user_id_session,transaction_ID)
+                    print("Result2", updated_transaction1)
                     if updated_transaction1:
                         return jsonify({'message': 'Transaction Approved', 'status_code': 200}), 200
                     else:
                         return jsonify({'error': 'Failed to Approve', 'status_code': 500}), 500
-            return  
+            return jsonify({'error': 'Result not found', 'status_code': 500}), 500
 
     return jsonify({'error': 'User is not a manager', 'status_code': 404}), 404
 
