@@ -178,7 +178,7 @@ def get_approve_transaction():
             user_result = users_of_credit_union.get_users_of_credit_union(user_id_session)
             print("Main Result", user_result)
             if user_result:
-                credit_union_id = user_result('credit_union_id')
+                credit_union_id = user_result[5]
                 print("credit_union_id", credit_union_id)
                 if credit_union_id == CREDIT_UNION_ORIGINATING_ID:
                     updated_transaction = update_transaction.get_update_transaction(user_id_session,transaction_ID)

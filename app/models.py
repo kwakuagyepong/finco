@@ -117,11 +117,7 @@ class users_of_credit_union:
         with mysql.connection.cursor() as cursor:
             cursor.execute("""
                             SELECT * FROM users_of_credit_union WHERE credit_union_user_id = %s ; 
-<<<<<<< HEAD
                            """, (user_id_session,))
-=======
-            """, (user_id_session,))
->>>>>>> 594399b6d20947192348b56e2510dc502d27c471
             get_user = cursor.fetchone()
             
         return get_user
