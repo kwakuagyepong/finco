@@ -178,7 +178,6 @@ def get_approve_transaction():
             print("Main Result", user_result)
             if user_result:
                 credit_union_id = user_result[5]
-
                 print("credit_union_id", credit_union_id)
                 if credit_union_id == CREDIT_UNION_ORIGINATING_ID:
                     if not ORIGINATING_MANAGER_ID:
