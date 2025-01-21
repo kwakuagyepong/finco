@@ -110,9 +110,6 @@ def get_deposit():
             return jsonify({'message': 'Transaction submitted', 'status_code': 200}), 200
         else:
             return jsonify({'error': 'Failed to submit', 'status_code': 500}), 500
-        
- 
-
 
      else:
          return jsonify({'Error': 'User ID not found to initialize transaction'})
@@ -132,8 +129,8 @@ def get_funds_data():
     full_data = disbursingfunds.get_funds_transaction(transaction_ID)
 
     if full_data:
-        ORIGINATING_MANAGER_ID = full_data.get('ORIGINATING_MANAGER_ID')
-        DESTINATION_MANAGER_ID = full_data.get('DESTINATION_MANAGER_ID')
+        ORIGINATING_MANAGER_ID = [12]
+        DESTINATION_MANAGER_ID = [13]
 
         if not ORIGINATING_MANAGER_ID or not DESTINATION_MANAGER_ID:
             return jsonify({
@@ -158,16 +155,18 @@ def get_approve_transaction():
             # credit_id = session['credit_union_id']
             required_fields = ['transaction_ID']
             required_fields = ['CREDIT_UNION_ORIGINATING_ID']
+
            
             data = request.json
+            print("Incoming request data:", data) 
             missing_fields = [field for field in required_fields if field not in data]
 
             if missing_fields:
                 error_message = f"Missing fields: {', '.join(missing_fields)}"
                 return jsonify({'error': error_message, 'status_code': 400}), 400
             
-            ORIGINATING_MANAGER_ID = ['ORIGINATING_MANAGER_ID']
-            DESTINATION_MANAGER_ID = ['DESTINATION_MANAGER_ID']
+            ORIGINATING_MANAGER_ID = data['ORIGINATING_MANAGER_ID']
+            DESTINATION_MANAGER_ID = data['DESTINATION_MANAGER_ID']
             
             transaction_ID = data['transaction_ID']
             CREDIT_UNION_ORIGINATING_ID = data['CREDIT_UNION_ORIGINATING_ID']
