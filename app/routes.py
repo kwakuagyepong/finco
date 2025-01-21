@@ -166,17 +166,18 @@ def get_approve_transaction():
                 error_message = f"Missing fields: {', '.join(missing_fields)}"
                 return jsonify({'error': error_message, 'status_code': 400}), 400
             
-            ORIGINATING_MANAGER_ID = ['ORIGINATING_MANAGER_ID']
-            DESTINATION_MANAGER_ID = ['DESTINATION_MANAGER_ID']
-            
+            ORIGINATING_MANAGER_ID = data['ORIGINATING_MANAGER_ID']
+            DESTINATION_MANAGER_ID = data['DESTINATION_MANAGER_ID']
+            print("ORIGINATING_MANAGER_ID", ORIGINATING_MANAGER_ID)
+            print("DESTINATION_MANAGER_ID", DESTINATION_MANAGER_ID)
             transaction_ID = data['transaction_ID']
             CREDIT_UNION_ORIGINATING_ID = data['CREDIT_UNION_ORIGINATING_ID']
             
             user_result = users_of_credit_union.get_users_of_credit_union(user_id_session)
-            print("Main Result", user_result)
+            # print("Main Result", user_result)
             if user_result:
                 credit_union_id = user_result[5]
-                print("credit_union_id", credit_union_id)
+                # print("credit_union_id", credit_union_id)
                 if credit_union_id == CREDIT_UNION_ORIGINATING_ID:
                     if not ORIGINATING_MANAGER_ID:
                         updated_transaction = update_transaction.get_update_transaction(user_id_session,transaction_ID)
