@@ -9,8 +9,6 @@ authentication_blueprint = Blueprint('users', __name__)
 # CORS(authentication_blueprint) 
 
 
-
-
 # New route to signup
 @authentication_blueprint.route('/api/users', methods=['POST'])
 def add_user():
@@ -182,7 +180,7 @@ def get_approve_transaction():
                 if credit_union_id == CREDIT_UNION_ORIGINATING_ID:
                     if not ORIGINATING_MANAGER_ID:
                         updated_transaction = update_transaction.get_update_transaction(user_id_session,transaction_ID)
-                        print("Result1", updated_transaction)
+                        print("ORIGINATING_MANAGER_ID", ORIGINATING_MANAGER_ID)
                         if updated_transaction:
                             return jsonify({'message': 'Transaction Approved', 'status_code': 200}), 200
                         else:
@@ -192,13 +190,13 @@ def get_approve_transaction():
                 else:
                     if not DESTINATION_MANAGER_ID:                                                                                                                           
                         updated_transaction1 = update_transaction.get_update_transaction_destination_manager(user_id_session,transaction_ID)
-                        print("Result2", updated_transaction1)
+                        print("DESTINATION_MANAGER_ID", DESTINATION_MANAGER_ID)
                         if updated_transaction1:
                             return jsonify({'message': 'Transaction Approved', 'status_code': 200}), 200
                         else:
                             return jsonify({'error': 'Failed to Approve', 'status_code': 500}), 500
                     else: 
-                        return jsonify({'error': 'Transaction has already been approved', 'status_code': 500}), 500
+                        return jsonify({'error': 'Transaction has already been approved', 'status_code': 500}), 500 
                         
             return jsonify({'error': 'Result not found', 'status_code': 500}), 500
 
