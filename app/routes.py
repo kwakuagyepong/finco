@@ -148,7 +148,7 @@ def get_funds_data():
 def get_approve_transaction():
     user_role = session['role']
     role_assigned = "manager"
-    
+    not_assigned = "Not Assigned"
     if user_role == role_assigned:
 
             user_id_session = session['user_id']
@@ -156,7 +156,6 @@ def get_approve_transaction():
             required_fields = ['transaction_ID']
             required_fields = ['CREDIT_UNION_ORIGINATING_ID']
 
-           
             data = request.json
             # print("Incoming request data:", data) 
             missing_fields = [field for field in required_fields if field not in data]
@@ -167,12 +166,8 @@ def get_approve_transaction():
             
             ORIGINATING_MANAGER_ID = data['ORIGINATING_MANAGER_ID']
             DESTINATION_MANAGER_ID = data['DESTINATION_MANAGER_ID']
-<<<<<<< HEAD
             print("ORIGINATING_MANAGER_ID", ORIGINATING_MANAGER_ID)
             print("DESTINATION_MANAGER_ID", DESTINATION_MANAGER_ID)
-=======
-            
->>>>>>> dad63c937a018ffcfa7c844b81070766b9a9ed50
             transaction_ID = data['transaction_ID']
             CREDIT_UNION_ORIGINATING_ID = data['CREDIT_UNION_ORIGINATING_ID']
             
@@ -190,19 +185,19 @@ def get_approve_transaction():
                         else:
                             return jsonify({'error': 'Failed to Approve', 'status_code': 500}), 500
                     else:
-                        return jsonify({'error': 'Transaction has already been approved', 'status_code': 500}), 500
+                        return jsonify({'error': 'Transaction has already been approved', 'status_code': 501}), 501
                 else:
-                    if DESTINATION_MANAGER_ID == "Not Assigned":                                                                                                                           
+                    if DESTINATION_MANAGER_ID == not_assigned:                                                                                                                           
                         updated_transaction1 = update_transaction.get_update_transaction_destination_manager(user_id_session,transaction_ID)
                         print("DESTINATION_MANAGER_ID", DESTINATION_MANAGER_ID)
                         if updated_transaction1:
                             return jsonify({'message': 'Transaction Approved', 'status_code': 200}), 200
                         else:
-                            return jsonify({'error': 'Failed to Approve', 'status_code': 500}), 500
+                            return jsonify({'error': 'Failed to Approve', 'status_code': 502}), 502
                     else: 
-                        return jsonify({'error': 'Transaction has already been approved', 'status_code': 500}), 500 
+                        return jsonify({'error': 'Transaction has already been approved', 'status_code': 503}), 503 
                         
-            return jsonify({'error': 'Result not found', 'status_code': 500}), 500
+            return jsonify({'error': 'Result not found', 'status_code': 504}), 504
 
     return jsonify({'error': 'User is not a manager', 'status_code': 404}), 404
 
