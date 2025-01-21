@@ -167,12 +167,8 @@ def get_approve_transaction():
             
             ORIGINATING_MANAGER_ID = data['ORIGINATING_MANAGER_ID']
             DESTINATION_MANAGER_ID = data['DESTINATION_MANAGER_ID']
-<<<<<<< HEAD
             print("ORIGINATING_MANAGER_ID", ORIGINATING_MANAGER_ID)
             print("DESTINATION_MANAGER_ID", DESTINATION_MANAGER_ID)
-=======
-            
->>>>>>> dad63c937a018ffcfa7c844b81070766b9a9ed50
             transaction_ID = data['transaction_ID']
             CREDIT_UNION_ORIGINATING_ID = data['CREDIT_UNION_ORIGINATING_ID']
             
