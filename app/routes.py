@@ -158,7 +158,7 @@ def get_approve_transaction():
 
            
             data = request.json
-            print("Incoming request data:", data) 
+            # print("Incoming request data:", data) 
             missing_fields = [field for field in required_fields if field not in data]
 
             if missing_fields:
@@ -187,7 +187,7 @@ def get_approve_transaction():
                     else:
                         return jsonify({'error': 'Transaction has already been approved', 'status_code': 500}), 500
                 else:
-                    if not DESTINATION_MANAGER_ID:                                                                                                                           
+                    if DESTINATION_MANAGER_ID == "Not Assigned":                                                                                                                           
                         updated_transaction1 = update_transaction.get_update_transaction_destination_manager(user_id_session,transaction_ID)
                         print("DESTINATION_MANAGER_ID", DESTINATION_MANAGER_ID)
                         if updated_transaction1:
