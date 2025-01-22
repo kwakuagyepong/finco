@@ -51,7 +51,8 @@ def get_funds():
 def approve_transaction():
     return get_approve_transaction()
 
-# Credit Union short list on Teller Page (START)   
+
+# Show all credit unions from transaction form (START)   
 @authentication_blueprint.route('/api/creditunions', methods=['GET']) 
 def creditunion_short_display():
     return get_creditunion()   
