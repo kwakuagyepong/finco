@@ -3,6 +3,7 @@ from app.models import CreditUnion_deposit
 from datetime import datetime
 from PIL import Image 
 import base64
+import os
 from io import BytesIO
 import os
 
@@ -37,6 +38,11 @@ def get_deposit():
 
         # directory of image
         UPLOAD_FOLDER = 'customer_id_cards'
+
+        # Create the directory if it doesn't exist
+        #if not os.path.exists(UPLOAD_FOLDER):
+            #os.makedirs(UPLOAD_FOLDER)
+
         try:
             # Decode the base64 image
             image_data = base64.b64decode(customer_id_image)
