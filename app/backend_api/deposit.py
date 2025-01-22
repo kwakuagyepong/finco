@@ -48,6 +48,7 @@ def get_deposit():
             image_data = base64.b64decode(customer_id_image)
             image = Image.open(BytesIO(image_data))
             filename = f"{UPLOAD_FOLDER}/{customer_id_number}_{first_name}_{last_name}_{datetime.now().strftime('%Y%m%d%H%M%S')}.png"
+            filenamedb = f"{customer_id_number}_{first_name}_{last_name}_{datetime.now().strftime('%Y%m%d%H%M%S')}.png"
             image.save(filename)
             print(f"Image saved to {filename}")
         except Exception as e:
@@ -56,7 +57,7 @@ def get_deposit():
 
         
         # print('destination id', credit_union_destination_id)
-        full_transaction = CreditUnion_deposit.push_transaction_desopit(first_name, last_name, transaction_type, amount, account_number, customer_id_number, filename, credit_union_destination_id, credit_union_originating_id, teller_name_id, date)
+        full_transaction = CreditUnion_deposit.push_transaction_desopit(first_name, last_name, transaction_type, amount, account_number, customer_id_number, filenamedb, credit_union_destination_id, credit_union_originating_id, teller_name_id, date)
 
         if full_transaction:
             return jsonify({'message': 'Transaction submitted', 'status_code': 200}), 200

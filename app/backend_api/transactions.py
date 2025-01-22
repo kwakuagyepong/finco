@@ -107,3 +107,4 @@ def get_image_base64(image_filename):
     except Exception as e:
         print(f"Error encoding image: {e}")
         return None  # Handle any errors during the process
+    
