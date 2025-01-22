@@ -1,9 +1,13 @@
 from flask import Blueprint, jsonify, session
 from app.models import all_transactions_teller,all_transactions_on_transations_page_teller
-
+ 
 
 def get_all_transactions_teller():
-    if 'teller' in session:
+    assigned_role = session['role']
+    role = "teller"
+    print("User Role", assigned_role)
+
+    if assigned_role == role:
         credit_union_id = session['credit_union_id']
         # teller = session['teller']
         # print(credit_union_id)
@@ -29,11 +33,15 @@ def get_all_transactions_teller():
             return jsonify(formatted_transaction),200
         else:
             return jsonify({'error': 'No Transactions found', 'status_code': 404}), 404
+    return jsonify({'error': 'Only teller can access this', 'status_code': 404}), 404
         
 
 
 def get_all_transactions_teller_pending():
-    if 'teller' in session:
+    role = ["teller", "manager", "admin"]
+    assigned_role = session['role']
+
+    if assigned_role in role:
         credit_union_id = session['credit_union_id']
         credit_union_id_repeat = credit_union_id
         
@@ -68,4 +76,4 @@ def get_all_transactions_teller_pending():
         else:
             return jsonify({'error': 'No Transactions found', 'status_code': 404}), 404
             
-    return jsonify({'error': 'User not Found', 'status_code': 404}), 404
+    return jsonify({'error': 'Unauthorized access', 'status_code': 404}), 404

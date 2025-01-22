@@ -61,7 +61,7 @@ def creditunion_short_display():
 # Show all credit Unions
 @authentication_blueprint.route('/api/all_creditunions', methods=['GET']) 
 def all_creditunion():
-    return get_all_creditunion
+    return get_all_creditunion()
 
 
 # Show all transactions Viewed by Teller (START)
@@ -74,6 +74,6 @@ def transactions_by_teller():
 # Show all transactions Viewed by Teller on Transactions page(START)
 @authentication_blueprint.route('/api/all_transactions_pending/teller', methods=['GET'])
 def all_transactions():
-    return get_all_transactions_teller_pending
+    return get_all_transactions_teller_pending()
 
             
