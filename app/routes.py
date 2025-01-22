@@ -157,13 +157,16 @@ def get_approve_transaction():
             required_fields = ['CREDIT_UNION_ORIGINATING_ID']
 
             data = request.json
-            # print("Incoming request data:", data) 
+            print("Incoming request data:", data) 
             missing_fields = [field for field in required_fields if field not in data]
 
             if missing_fields:
                 error_message = f"Missing fields: {', '.join(missing_fields)}"
                 return jsonify({'error': error_message, 'status_code': 400}), 400
             
+            status = data['status']
+            print("status", status)
+
             ORIGINATING_MANAGER_ID = data['ORIGINATING_MANAGER_ID']
             DESTINATION_MANAGER_ID = data['DESTINATION_MANAGER_ID']
             print("ORIGINATING_MANAGER_ID", ORIGINATING_MANAGER_ID)
