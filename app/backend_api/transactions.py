@@ -73,7 +73,6 @@ def get_all_transactions_teller_pending():
                         'TRANSACTION_TYPE' : row[3],
                         'ORIGINATING_MANAGER_ID': row[15],
                         'DESTINATION_MANAGER_ID': row[16],
-                        ''
                         'STATUS' : row[17]
                     },
                     'status_code': 200
@@ -89,7 +88,6 @@ def get_all_transactions_teller_pending():
 
 
 def get_image_base64(image_filename):
-    
     try:
         image_path = os.path.join(UPLOAD_FOLDER, image_filename)
         
@@ -104,6 +102,8 @@ def get_image_base64(image_filename):
                 return f"data:image/png;base64,{encoded_string}"
             print("Image Location", encoded_string)
         else:
-            return jsonify({'error': 'Image not found', 'status_code': 400}), 400  # Image not found
+            print(f"Image file {image_filename} not found.")
+            return None  # Image not found
     except Exception as e:
+        print(f"Error encoding image: {e}")
         return None  # Handle any errors during the process
