@@ -23,13 +23,13 @@ authentication_blueprint = Blueprint('users', __name__)
 def register_user():
     return add_user()
     
-    
+     
 # Route to signin   
 @authentication_blueprint.route('/api/users/<string:email>/<string:password>', methods=['GET'])
 def signin_user(email, password):
     return get_user(email, password)
 
-
+ 
 # Route to Signout 
 @authentication_blueprint.route('/api/signout', methods=['POST'])
 def logout():
@@ -74,4 +74,5 @@ def transactions_by_teller():
 @authentication_blueprint.route('/api/all_transactions_pending/teller', methods=['GET'])
 def all_transactions():
     return get_all_transactions_teller_pending
+
             
