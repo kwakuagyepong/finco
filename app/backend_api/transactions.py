@@ -90,6 +90,7 @@ def get_all_transactions_teller_pending():
 def get_image_base64(image_filename):
     try:
         image_path = os.path.join(UPLOAD_FOLDER, image_filename)
+        print("Image Path", image_path)
         
         # Check if the image file exists
         if os.path.exists(image_path):
