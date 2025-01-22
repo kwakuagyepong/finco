@@ -5,6 +5,7 @@ from PIL import Image
 import base64
 import os
 from io import BytesIO
+import os
 
 
 def get_deposit():
@@ -55,7 +56,7 @@ def get_deposit():
 
         
         # print('destination id', credit_union_destination_id)
-        full_transaction = CreditUnion_deposit.push_transaction_desopit(first_name, last_name, transaction_type, amount, account_number, customer_id_number, customer_id_image, credit_union_destination_id, credit_union_originating_id, teller_name_id, date)
+        full_transaction = CreditUnion_deposit.push_transaction_desopit(first_name, last_name, transaction_type, amount, account_number, customer_id_number, filename, credit_union_destination_id, credit_union_originating_id, teller_name_id, date)
 
         if full_transaction:
             return jsonify({'message': 'Transaction submitted', 'status_code': 200}), 200

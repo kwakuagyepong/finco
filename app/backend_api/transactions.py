@@ -1,6 +1,12 @@
-from flask import Blueprint, jsonify, session
+from flask import Blueprint, jsonify, session, send_from_directory
 from app.models import all_transactions_teller,all_transactions_on_transations_page_teller
+import os
+from io import BytesIO
+from PIL import Image
+from datetime import datetime
+import base64
  
+UPLOAD_FOLDER = 'customer_id_cards'
 
 def get_all_transactions_teller():
     assigned_role = session['role']
@@ -61,11 +67,13 @@ def get_all_transactions_teller_pending():
                         'CUSTOMER_LAST_NAME' : row[2],
                         'ACCOUNT_NUMBER' : row[5],
                         'CUSTOMER_ID' : row[6],
+                        'CUSTOMER_ID_CARD_IMAGE' : get_image_base64(row[7]),
                         'TIMESTAMP': row[13],
                         'TRANSACTION_ID': row[0],
                         'TRANSACTION_TYPE' : row[3],
                         'ORIGINATING_MANAGER_ID': row[15],
                         'DESTINATION_MANAGER_ID': row[16],
+                        ''
                         'STATUS' : row[17]
                     },
                     'status_code': 200
@@ -77,3 +85,25 @@ def get_all_transactions_teller_pending():
             return jsonify({'error': 'No Transactions found', 'status_code': 404}), 404
             
     return jsonify({'error': 'Unauthorized access', 'status_code': 404}), 404
+
+
+
+def get_image_base64(image_filename):
+    
+    try:
+        image_path = os.path.join(UPLOAD_FOLDER, image_filename)
+        
+        # Check if the image file exists
+        if os.path.exists(image_path):
+            # Open the image file
+            with open(image_path, "rb") as image_file:
+                # Read the image and encode it in base64
+                encoded_string = base64.b64encode(image_file.read()).decode('utf-8')
+                
+                # Return the base64 data as an image in base64 format
+                return f"data:image/png;base64,{encoded_string}"
+            print("Image Location", encoded_string)
+        else:
+            return jsonify({'error': 'Image not found', 'status_code': 400}), 400  # Image not found
+    except Exception as e:
+        return None  # Handle any errors during the process
