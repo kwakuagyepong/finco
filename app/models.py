@@ -50,6 +50,16 @@ class CreditUnionmodel:
                 creditunion_result = cursor.fetchall()
             return creditunion_result
         
+
+class all_CreditUnionmodels:
+        def get_all_credit_unions():
+            with mysql.connection.cursor() as cursor:
+                cursor.execute("""
+                                SELECT * FROM `creditunions`
+                            """)
+                creditunion_result = cursor.fetchall()
+            return creditunion_result
+        
 class disbursingfunds:
     def get_funds_transaction(transaction_ID):
         with mysql.connection.cursor() as cursor:

@@ -1,73 +1,25 @@
-from .backend_api.create_user import add_user
-from .backend_api.login_api import get_user
-from .backend_api.logout_api import signout
-from .backend_api.deposit import get_deposit
-from .backend_api.disburse_funds import get_funds_data
-from .backend_api.approve_transaction import get_approve_transaction
-from .backend_api.credit_union import get_creditunion,get_all_creditunion
-from .backend_api.transactions import get_all_transactions_teller,get_all_transactions_teller_pending
-
 from flask import Blueprint, jsonify, request, session
-# from app.controller import AuthenticationController
+from app.models import users_of_credit_union, update_transaction
 
-# from flask_cors import CORS
+def get_approve_transaction():
+    user_role = session['role']
+    role_assigned = "manager"
+    not_assigned = "Not Assigned"
+    if user_role == role_assigned:
 
-
-authentication_blueprint = Blueprint('users', __name__)
- 
-# CORS(authentication_blueprint) 
-
-
-# New route to signup
-@authentication_blueprint.route('/api/users', methods=['POST'])
-def register_user():
-    return add_user()
-    
-    
-# Route to signin   
-@authentication_blueprint.route('/api/users/<string:email>/<string:password>', methods=['GET'])
-def signin_user(email, password):
-    return get_user(email, password)
-
-
-# Route to Signout 
-@authentication_blueprint.route('/api/signout', methods=['POST'])
-def logout():
-    return signout()
-    
-    
- # Route to Insert transaction 
-@authentication_blueprint.route('/api/deposit', methods=['POST']) 
-def deposit_and_withdraw():
-    return get_deposit()
-
-
-@authentication_blueprint.route('/api/disbursefunds', methods=['GET'])
-def get_funds():
-    return get_funds_data()
-
-
-@authentication_blueprint.route('/api/approve_transaction', methods=['POST'])
-def approve_transaction():
-    return get_approve_transaction()
-
-<<<<<<< HEAD
             user_id_session = session['user_id']
             # credit_id = session['credit_union_id']
             required_fields = ['transaction_ID']
             required_fields = ['CREDIT_UNION_ORIGINATING_ID']
 
             data = request.json
-            print("Incoming request data:", data) 
+            # print("Incoming request data:", data) 
             missing_fields = [field for field in required_fields if field not in data]
 
             if missing_fields:
                 error_message = f"Missing fields: {', '.join(missing_fields)}"
                 return jsonify({'error': error_message, 'status_code': 400}), 400
             
-            status = data['status']
-            print("status", status)
-
             ORIGINATING_MANAGER_ID = data['ORIGINATING_MANAGER_ID']
             DESTINATION_MANAGER_ID = data['DESTINATION_MANAGER_ID']
             print("ORIGINATING_MANAGER_ID", ORIGINATING_MANAGER_ID)
@@ -106,31 +58,3 @@ def approve_transaction():
     return jsonify({'error': 'User is not a manager', 'status_code': 404}), 404
 
     
-
-# Show all credit unions from transaction form (START)   
-=======
-# Credit Union short list on Teller Page (START)   
->>>>>>> 205ac7c9e1d9227b8edff93a48ce7e526b5a6164
-@authentication_blueprint.route('/api/creditunions', methods=['GET']) 
-def creditunion_short_display():
-    return get_creditunion()   
-    
-
-# Show all credit Unions
-@authentication_blueprint.route('/api/all_creditunions', methods=['GET']) 
-def all_creditunion():
-    return get_all_creditunion
-
-
-# Show all transactions Viewed by Teller (START)
-@authentication_blueprint.route('/api/all_transactions/teller', methods=['GET'])
-def transactions_by_teller():
-    return get_all_transactions_teller()
-
-
-
-# Show all transactions Viewed by Teller on Transactions page(START)
-@authentication_blueprint.route('/api/all_transactions_pending/teller', methods=['GET'])
-def all_transactions():
-    return get_all_transactions_teller_pending
-            
