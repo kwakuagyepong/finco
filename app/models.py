@@ -200,7 +200,19 @@ class all_users:
             get_users = cursor.fetchall()
         return get_users
     
+    def update_user(credit_union_user_id,first_name, last_name, email, phone_number, status):
+        try:
+            cursor = mysql.connection.cursor()
+            cursor.execute("UPDATE users_of_credit_union SET first_name = %s, last_name = %s, email = %s, phone_number = %s, status = %s WHERE credit_union_user_id = %s",
+                           (first_name, last_name, email, phone_number, status, credit_union_user_id))
+            mysql.connection.commit()
+            cursor.close()
+            return {'Updated': credit_union_user_id} 
+        except Exception as e:
+            print(e)  
+            return None
     
+
 
         
 
