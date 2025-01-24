@@ -1,4 +1,4 @@
-from app.models import Authentication
+from app.models import Authentication,new_passwords
 import hashlib
 
 class AuthenticationController:
@@ -18,5 +18,13 @@ class AuthenticationController:
     def get_user(email, password):
         hashed_password = AuthenticationController.hash_password(password)
         return Authentication.get_a_user(email, hashed_password)
+    
+        # New method to signin
+    # @staticmethod
+    def get_user_password(user_id, teller, password):
+        hashed_password = AuthenticationController.hash_password(password)
+        return new_passwords.get_password(user_id, teller, hashed_password)
+    
+
     
      

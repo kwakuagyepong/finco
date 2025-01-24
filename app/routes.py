@@ -6,6 +6,7 @@ from .backend_api.disburse_funds import get_funds_data
 from .backend_api.approve_transaction import get_approve_transaction
 from .backend_api.credit_union import get_creditunion,get_all_creditunion
 from .backend_api.transactions import get_all_transactions_teller,get_all_transactions_teller_pending
+from .backend_api.passwords import get_password
 
 from flask import Blueprint, jsonify, request, session
 # from app.controller import AuthenticationController
@@ -76,4 +77,8 @@ def transactions_by_teller():
 def all_transactions():
     return get_all_transactions_teller_pending()
 
+
+@authentication_blueprint.route('/api/assign_password', methods=['GET'])
+def password_get():
+    return get_password()
             

@@ -157,7 +157,43 @@ class update_transaction:
         except Exception as e:
             print(e)  
             return None
+       
+
+class add_a_user:
+    def add_new_user(first_name, last_name, email, phone_number, credit_union, status):
+        try:
+            print(first_name, last_name, email, phone_number, credit_union, status)
+            cursor = mysql.connection.cursor()
+            cursor.execute("INSERT INTO users_of_credit_union (first_name, last_name, email, phone_number, credit_union_id, status) VALUES (%s,%s,%s,%s,%s,%s)",
+                           (first_name, last_name, email, phone_number, credit_union, status))
+            
+            mysql.connection.commit()
+            cursor.close()
+            return {'New User': first_name}
+        except Exception as e:
+            print(e)
+            return None
+
+
+class new_passwords:
+    def get_password(user_id, teller, hashed_password):
+        try:
+            print(user_id, teller, hashed_password)
+            cursor = mysql.connection.cursor()
+            cursor.execute("INSERT INTO credentials (Users_ID, password, role) VALUES (%s,%s,%s)",
+                           (user_id, hashed_password,teller))
+            
+            mysql.connection.commit()
+            cursor.close()
+            return {'New User': user_id}
+        except Exception as e:
+            print(e)
+            return None
+
         
+
+        
+
 
 
 
