@@ -13,7 +13,7 @@ from .backend_api.all_users import get_all_teller,get_update_users
 from flask import Blueprint, jsonify, request, session
 # from app.controller import AuthenticationController
 
-from flask_cors import CORS
+# from flask_cors import CORS
 
 
 authentication_blueprint = Blueprint('users', __name__)
@@ -80,7 +80,7 @@ def all_transactions():
     return get_all_transactions_teller_pending()
 
 
-@authentication_blueprint.route('/api/assign_password', methods=['GET'])
+@authentication_blueprint.route('/api/assign_password', methods=['POST'])
 def password_get():
     return get_password()
 
@@ -88,6 +88,8 @@ def password_get():
 def user_all():
     return get_all_teller()    
 
-@authentication_blueprint.route('/api/update_user', methods=['GET'])
+@authentication_blueprint.route('/api/update_user', methods=['POST'])
 def update_user_all():
     return get_update_users()
+
+

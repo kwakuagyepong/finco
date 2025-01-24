@@ -26,3 +26,4 @@ def get_password():
             return jsonify({'error': 'Failed to add user', 'status_code': 500}), 500
         
     return jsonify({'error': 'Unauthorized user', 'status_code': 400}), 400
+ 
