@@ -9,10 +9,11 @@ from .backend_api.transactions import get_all_transactions_teller,get_all_transa
 from .backend_api.passwords import get_password
 from .backend_api.all_users import get_all_teller,get_update_users
 
+
 from flask import Blueprint, jsonify, request, session
 # from app.controller import AuthenticationController
 
-# from flask_cors import CORS
+from flask_cors import CORS
 
 
 authentication_blueprint = Blueprint('users', __name__)
