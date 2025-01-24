@@ -25,9 +25,9 @@ def get_all_teller():
                         'status': row[6]
                     },
                 }
-                for row in formatted_result
+                for row in result_users
             ]
-            return jsonify(result_users)
+            return jsonify(formatted_result)
         else: 
             return jsonify({'error': 'No Users Found', 'status_code': 404}), 404
     return jsonify({'error': 'Unauthorized access', 'status_code': 404}), 404
