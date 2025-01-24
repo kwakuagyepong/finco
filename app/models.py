@@ -190,6 +190,18 @@ class new_passwords:
             print(e)
             return None
 
+
+class all_users:
+    def get_all_users(credit_union_id, user_id):
+        with mysql.connection.cursor() as cursor:
+            cursor.execute("""
+                           SELECT * FROM users_of_credit_union WHERE credit_union_id = %s  AND credit_union_user_id != %s ; 
+                           """, (credit_union_id,user_id,))
+            get_users = cursor.fetchall()
+        return get_users
+    
+    
+
         
 
         
