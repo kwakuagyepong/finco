@@ -60,6 +60,20 @@ class all_CreditUnionmodels:
                 creditunion_result = cursor.fetchall()
             return creditunion_result
         
+            
+        def register_the_creditunion(Credit_Union,address,phone_number,email,status):
+            try:
+                cursor = mysql.connection.cursor()
+                cursor.execute("INSERT INTO creditunions (name,address,phone_number,email,Status) VALUES (%s,%s,%s,%s)",
+                            (Credit_Union,address,phone_number,email,status))
+                
+                mysql.connection.commit()
+                cursor.close()
+                return {'New User': Credit_Union}
+            except Exception as e:
+                print(e)
+                return None
+        
 class disbursingfunds:
     def get_funds_transaction(transaction_ID):
         with mysql.connection.cursor() as cursor:
@@ -131,6 +145,7 @@ class users_of_credit_union:
             get_user = cursor.fetchone()
             
         return get_user
+
     
 
 class update_transaction:
@@ -186,6 +201,20 @@ class new_passwords:
             mysql.connection.commit()
             cursor.close()
             return {'New User': user_id}
+        except Exception as e:
+            print(e)
+            return None
+        
+    def change_password(credentials_id,hashed_password):
+        try:
+            print(credentials_id,hashed_password)
+            cursor = mysql.connection.cursor()
+            cursor.execute("UPDATE credentials SET credencials_id = %s, password = %s",
+                           (credentials_id,hashed_password))
+            
+            mysql.connection.commit()
+            cursor.close()
+            return {'New User': credentials_id}
         except Exception as e:
             print(e)
             return None
