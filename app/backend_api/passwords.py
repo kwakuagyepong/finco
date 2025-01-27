@@ -15,7 +15,7 @@ def assign_password():
             return jsonify({'error': error_message, 'status_code': 400}), 400
         
         user_id = data['user_id']
-        credentials_id = data['credentials_id']
+        credentials_id = data['credencials_id']
         users_password = "Ghana"
         role_assigning = "teller"
         role_checking = ["teller", "manager"]
@@ -38,14 +38,14 @@ def update_password():
     assigned_role = session['role']
 
     if assigned_role in role:
-        required_fields = ['credentials_id', 'users_password'] 
+        required_fields = ['credencials_id', 'users_password'] 
         data = request.json
         missing_fields = [field for field in required_fields if field not in data]
         if missing_fields:
             error_message = f"Missing fields: {', '.join(missing_fields)}"
             return jsonify({'error': error_message, 'status_code': 400}), 400
         
-        credentials_id = data['credentials_id']
+        credentials_id = data['credencials_id']
         users_password = data['users_password']
 
         result_password = AuthenticationController.change_user_password(credentials_id,users_password)
