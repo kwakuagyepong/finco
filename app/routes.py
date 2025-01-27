@@ -1,4 +1,4 @@
-from .backend_api.create_user import add_user
+from .backend_api.create_user import add_user, get_update_users
 from .backend_api.login_api import get_user
 from .backend_api.logout_api import signout
 from .backend_api.deposit import get_deposit
@@ -7,7 +7,7 @@ from .backend_api.approve_transaction import get_approve_transaction
 from .backend_api.credit_union import get_creditunion,get_all_creditunion
 from .backend_api.transactions import get_all_transactions_teller,get_all_transactions_teller_pending
 from .backend_api.passwords import get_password
-from .backend_api.all_users import get_all_teller,get_update_users
+from .backend_api.all_users import get_all_teller
 
 
 from flask import Blueprint, jsonify, request, session
@@ -88,6 +88,6 @@ def password_get():
 def user_all():
     return get_all_teller()    
 
-@authentication_blueprint.route('/api/update_user', methods=['GET'])
+@authentication_blueprint.route('/api/update_user', methods=['POST'])
 def update_user_all():
     return get_update_users()
