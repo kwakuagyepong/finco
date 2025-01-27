@@ -21,8 +21,8 @@ class AuthenticationController:
     
         # New method to signin
     @staticmethod
-    def get_user_password(user_id, teller, password):
-        hashed_password = AuthenticationController.hash_password(password)
+    def get_user_password(user_id, teller, users_password):
+        hashed_password = AuthenticationController.hash_password(users_password)
         return new_passwords.get_password(user_id, teller, hashed_password)
     
     @staticmethod

@@ -15,15 +15,20 @@ def assign_password():
             return jsonify({'error': error_message, 'status_code': 400}), 400
         
         user_id = data['user_id']
-        password = "Ghana"
+        credentials_id = data['credentials_id']
+        users_password = "Ghana"
         role_assigning = "teller"
+        role_checking = ["teller", "manager"]
 
-        result_password = AuthenticationController.get_user_password(user_id,role_assigning,password)
+        if assigned_role in role_checking:
+            result_password = AuthenticationController.change_user_password(credentials_id,users_password)
+        else: 
+            result_password = AuthenticationController.get_user_password(user_id,role_assigning,users_password)
 
         if result_password:
-            return jsonify({'message': 'Password assigned successfully', 'status_code': 200}), 200
+            return jsonify({'message': 'Password successfully updated', 'status_code': 200}), 200
         else: 
-            return jsonify({'error': 'Failed to assign password', 'status_code': 500}), 500
+            return jsonify({'error': 'Failed to process password', 'status_code': 500}), 500
         
     return jsonify({'error': 'Unauthorized user', 'status_code': 400}), 400
 
