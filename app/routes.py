@@ -6,13 +6,8 @@ from .backend_api.disburse_funds import get_funds_data
 from .backend_api.approve_transaction import get_approve_transaction
 from .backend_api.credit_union import get_creditunion,get_all_creditunion,register_creditunion
 from .backend_api.transactions import get_all_transactions_teller,get_all_transactions_teller_pending
-<<<<<<< HEAD
-from .backend_api.passwords import get_password
+from .backend_api.passwords import get_password,update_password
 from .backend_api.all_users import get_all_teller
-=======
-from .backend_api.passwords import get_password,update_passowrd
-from .backend_api.all_users import get_all_teller,get_update_users
->>>>>>> a26871bb36a6eda08e3129004fedc985906cdc5e
 
 
 from flask import Blueprint, jsonify, request, session
@@ -106,6 +101,6 @@ def update_user_all():
 
 @authentication_blueprint.route('/api/change_password', methods=['POST'])
 def change_password():
-    return update_passowrd()
+    return update_password()
 
 
