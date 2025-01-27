@@ -20,10 +20,15 @@ class AuthenticationController:
         return Authentication.get_a_user(email, hashed_password)
     
         # New method to signin
-    # @staticmethod
+    @staticmethod
     def get_user_password(user_id, teller, password):
         hashed_password = AuthenticationController.hash_password(password)
         return new_passwords.get_password(user_id, teller, hashed_password)
+    
+    @staticmethod
+    def change_user_password(credentials_id,users_password):
+        hashed_password = AuthenticationController.hash_password(users_password)
+        return new_passwords.get_password(credentials_id,hashed_password)
     
 
     
