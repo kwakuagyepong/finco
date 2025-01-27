@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request, session
 from app.controller import AuthenticationController
 
 
-def get_password():
+def assign_password():
     role = ["manager", "admin"]
     assigned_role = session['role']
 
@@ -21,9 +21,9 @@ def get_password():
         result_password = AuthenticationController.get_user_password(user_id,role_assigning,password)
 
         if result_password:
-            return jsonify({'message': 'User registered successfully', 'status_code': 200}), 200
+            return jsonify({'message': 'Password assigned successfully', 'status_code': 200}), 200
         else: 
-            return jsonify({'error': 'Failed to add user', 'status_code': 500}), 500
+            return jsonify({'error': 'Failed to assign password', 'status_code': 500}), 500
         
     return jsonify({'error': 'Unauthorized user', 'status_code': 400}), 400
 

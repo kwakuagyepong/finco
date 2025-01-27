@@ -6,7 +6,7 @@ from .backend_api.disburse_funds import get_funds_data
 from .backend_api.approve_transaction import get_approve_transaction
 from .backend_api.credit_union import get_creditunion,get_all_creditunion,register_creditunion
 from .backend_api.transactions import get_all_transactions_teller,get_all_transactions_teller_pending
-from .backend_api.passwords import get_password,update_passowrd
+from .backend_api.passwords import assign_password,update_passowrd
 from .backend_api.all_users import get_all_teller,get_update_users
 
 
@@ -88,7 +88,7 @@ def all_transactions():
 
 @authentication_blueprint.route('/api/assign_password', methods=['POST'])
 def password_get():
-    return get_password()
+    return assign_password()
 
 @authentication_blueprint.route('/api/get_all_tellers', methods=['GET'])
 def user_all():
