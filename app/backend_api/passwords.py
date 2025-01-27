@@ -28,7 +28,7 @@ def assign_password():
     return jsonify({'error': 'Unauthorized user', 'status_code': 400}), 400
 
 
-def update_passowrd():
+def update_password():
     role = ["manager", "admin", "teller"]
     assigned_role = session['role']
 
