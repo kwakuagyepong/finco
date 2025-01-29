@@ -209,8 +209,8 @@ class new_passwords:
         try:
             print(credentials_id,hashed_password)
             cursor = mysql.connection.cursor()
-            cursor.execute("UPDATE credentials SET credencials_id = %s, password = %s",
-                           (credentials_id,hashed_password))
+            cursor.execute("UPDATE credentials SET password = %s WHERE credencials_id = %s",
+                           (hashed_password,credentials_id))
             
             mysql.connection.commit()
             cursor.close()
