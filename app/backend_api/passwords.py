@@ -22,13 +22,13 @@ def assign_password():
             credentials_id = None  # Assign.
         users_password = "Ghana"
         role_assigning = "teller"
-
+ 
         if 'credencials_id' in data and data['credencials_id']:
             credentials_id = data['credencials_id']
             result_password = AuthenticationController.change_user_password(credentials_id,users_password)
         else:
             credentials_id = None  # or some default value
-            result_password = AuthenticationController.get_user_password(user_id,role_assigning,users_password)
+            result_password = AuthenticationController.get_user_password(user_id,role_assigning,users_password) 
 
         if result_password:
             return jsonify({'message': 'Password successfully updated', 'status_code': 200}), 200
