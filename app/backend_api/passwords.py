@@ -15,14 +15,19 @@ def assign_password():
             return jsonify({'error': error_message, 'status_code': 400}), 400
         
         user_id = data['user_id']
-        credentials_id = data['credencials_id']
+        # check of there is data in the credencials_id.
+        try:
+            credentials_id = data['credencials_id']
+        except KeyError:
+            credentials_id = None  # Assign.
         users_password = "Ghana"
         role_assigning = "teller"
-        role_checking = ["teller", "manager"]
 
-        if assigned_role in role_checking:
+        if 'credencials_id' in data and data['credencials_id']:
+            credentials_id = data['credencials_id']
             result_password = AuthenticationController.change_user_password(credentials_id,users_password)
-        else: 
+        else:
+            credentials_id = None  # or some default value
             result_password = AuthenticationController.get_user_password(user_id,role_assigning,users_password)
 
         if result_password:
