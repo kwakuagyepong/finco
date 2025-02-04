@@ -205,16 +205,15 @@ class new_passwords:
             print(e)
             return None
         
-    def change_password(credentials_id,hashed_password):
+    def change_password(the_credentials,hashed_password):
         try:
-            print(credentials_id,hashed_password)
+            print("After encyption: ", the_credentials,hashed_password)
             cursor = mysql.connection.cursor()
             cursor.execute("UPDATE credentials SET password = %s WHERE credencials_id = %s",
-                           (hashed_password,credentials_id))
-            
+                           (hashed_password,the_credentials))
             mysql.connection.commit()
             cursor.close()
-            return {'New User': credentials_id}
+            return {'New User': the_credentials}
         except Exception as e:
             print(e)
             return None
@@ -243,7 +242,38 @@ class all_users:
     
 
 
+# Below are functions for amking checks eg.
+class checks:
+    def check_for_data_for_credentials_tables(user_id):
+        try:
+            # Assuming mysql.connection is already established and available
+            with mysql.connection.cursor() as cursor:
+                cursor.execute("""
+                            SELECT * FROM credentials WHERE Users_ID = %s
+                            """, (user_id,))
+                get_credentials_data = cursor.fetchone()
+            
+            # Return the fetched data (could be None if no data is found)
+            return get_credentials_data
         
+        except mysql.connector.Error as err:
+            # Handle any database errors
+            print(f"Database error: {err}")
+            return None
+        except Exception as e:
+            # Handle any other exceptions
+            print(f"An error occurred: {e}")
+            return None
+
+
+    # @staticmethod
+    # def check_for_data_for_credentials_tables(user_id):
+    #     with mysql.connection.cursor() as cursor:
+    #         cursor.execute("""
+    #                        SELECT * FROM credentials WHERE Users_ID = %s
+    #                        """, (user_id,))
+    #         get_credentials_data = cursor.fetchone()
+    #     return get_credentials_data
 
         
 

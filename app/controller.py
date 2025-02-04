@@ -26,9 +26,9 @@ class AuthenticationController:
         return new_passwords.get_password(user_id, teller, hashed_password)
     
     @staticmethod
-    def change_user_password(credentials_id,users_password):
+    def change_user_password(the_credentials,users_password):
         hashed_password = AuthenticationController.hash_password(users_password)
-        return new_passwords.change_password(credentials_id,hashed_password)
+        return new_passwords.change_password(the_credentials,hashed_password)
     
 
     
