@@ -18,7 +18,7 @@ def get_user(email, password):
             return jsonify({
                 'user': 
                 {
-                    # 'id': user[0],
+                    'id': user[0],
                     'credit_union_id': user[4],
                     'email': user[3],
                     'role': user[1],

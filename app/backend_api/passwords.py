@@ -1,5 +1,7 @@
 from flask import Blueprint, jsonify, request, session
 from app.controller import AuthenticationController
+from app.models import checks
+
 
 
 def assign_password():
@@ -20,14 +22,16 @@ def assign_password():
         # credentials_id = data['credencials_id']
         
  # check of there is data in the credencials_id.
-        if 'credencials_id' in data and data['credencials_id']:
-            credentials_id = data['credencials_id']
-            print("before encription", credentials_id)
-            result_password = AuthenticationController.change_user_password(credentials_id,users_password)
+ 
+        get_data = checks.check_for_data_for_credentials_tables(user_id)
+        print(get_data)
+        if get_data:
+            the_credentials = get_data[0]
+            print("The user Id", the_credentials)
+            result_password = AuthenticationController.change_user_password(the_credentials,users_password)
         else:
-            credentials_id = None  # or some default value
             result_password = AuthenticationController.get_user_password(user_id,role_assigning,users_password) 
-        print("This is the Cedentials id", credentials_id)        
+        # print("This is the Cedentials id", credentials_id)        
         if result_password:
             return jsonify({'message': 'Password successfully updated', 'status_code': 200}), 200
         else: 
