@@ -239,6 +239,19 @@ class all_users:
         except Exception as e:
             print(e)  
             return None
+        
+class user_status:
+    def get_status(user_id,user_status_current):
+        try:
+            cursor = mysql.connection.cursor()
+            cursor.execute("UPDATE users_of_credit_union SET status = %s WHERE credit_union_user_id = %s",
+                           (user_status_current, user_id))
+            mysql.connection.commit()
+            cursor.close()
+            return {'Updated': user_id}
+        except Exception as e:
+            print(e)
+            return None
     
 
 

@@ -8,6 +8,7 @@ from .backend_api.credit_union import get_creditunion,get_all_creditunion,regist
 from .backend_api.transactions import get_all_transactions_teller,get_all_transactions_teller_pending
 from .backend_api.passwords import assign_password,update_password
 from .backend_api.all_users import get_all_teller
+from .backend_api.user_status import assign_user_status
 
 
 from flask import Blueprint, jsonify, request, session
@@ -104,3 +105,7 @@ def change_password():
     return update_password()
 
 
+
+@authentication_blueprint.route('/api/set_user_status', methods=['POST'])
+def get_status():
+    return assign_user_status()
