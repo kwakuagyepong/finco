@@ -24,30 +24,12 @@ def assign_password():
             credentials_id = None  # Assign.
         users_password = "Ghana"
         role_assigning = "teller"
-<<<<<<< HEAD
  
         if 'credencials_id' in data and data['credencials_id']:
             credentials_id = data['credencials_id']
             result_password = AuthenticationController.change_user_password(credentials_id,users_password)
-=======
-        # credentials_id = data['credencials_id']
-        
- # check of there is data in the credencials_id.
- 
-        get_data = checks.check_for_data_for_credentials_tables(user_id)
-        print(get_data)
-        if get_data:
-            the_credentials = get_data[0]
-            print("The user Id", the_credentials)
-            result_password = AuthenticationController.change_user_password(the_credentials,users_password)
->>>>>>> 330c6649f3ee898c78c0a14d18d85e3cf043d744
         else:
             result_password = AuthenticationController.get_user_password(user_id,role_assigning,users_password) 
-<<<<<<< HEAD
-
-=======
-        # print("This is the Cedentials id", credentials_id)        
->>>>>>> 330c6649f3ee898c78c0a14d18d85e3cf043d744
         if result_password:
             return jsonify({'message': 'Password successfully updated', 'status_code': 200}), 200
         else: 
