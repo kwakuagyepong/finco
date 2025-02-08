@@ -9,6 +9,7 @@ from .backend_api.transactions import get_all_transactions_teller,get_all_transa
 from .backend_api.passwords import assign_password,update_password
 from .backend_api.all_users import get_all_teller
 from .backend_api.user_status import assign_user_status
+from .backend_api.admin_functions import get_users
 
 
 from flask import Blueprint, jsonify, request, session
@@ -109,3 +110,9 @@ def change_password():
 @authentication_blueprint.route('/api/set_user_status', methods=['POST'])
 def get_status():
     return assign_user_status()
+
+
+# View all users
+@authentication_blueprint.route('/api/get_users_all', methods=['GET'])
+def get_all_users():
+    return get_users()

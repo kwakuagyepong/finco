@@ -290,6 +290,48 @@ class checks:
 
         
 
+class Admin_use:
+    def all_users():
+        try:
+            # Assuming mysql.connection is already established and available
+            with mysql.connection.cursor() as cursor:
+                cursor.execute("""
+                            SELECT * FROM users_of_credit_union
+                            """,)
+                get_credentials_data = cursor.fetchall()
+            # Return the fetched data (could be None if no data is found)
+            return get_credentials_data
+        
+        except mysql.connector.Error as err:
+            # Handle any database errors
+            print(f"Database error: {err}")
+            return None
+        except Exception as e:
+            # Handle any other exceptions
+            print(f"An error occurred: {e}")
+            return None
+        
+    def all_transactions():
+        try:
+            # Assuming mysql.connection is already established and available
+            with mysql.connection.cursor() as cursor:
+                cursor.execute("""
+                            SELECT * FROM transactions
+                            """,)
+                get_credentials_data = cursor.fetchall()
+            # Return the fetched data (could be None if no data is found)
+            return get_credentials_data
+        
+        except mysql.connector.Error as err:
+            # Handle any database errors
+            print(f"Database error: {err}")
+            return None
+        except Exception as e:
+            # Handle any other exceptions
+            print(f"An error occurred: {e}")
+            return None
+
+
 
 
 
