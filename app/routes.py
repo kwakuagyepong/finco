@@ -96,6 +96,7 @@ def password_get():
 def user_all():
     return get_all_teller()    
 
+
 @authentication_blueprint.route('/api/update_user', methods=['POST'])
 def update_user_all():
     return get_update_users()
@@ -106,7 +107,7 @@ def change_password():
     return update_password()
 
 
-
+# Update status of credit union
 @authentication_blueprint.route('/api/set_user_status', methods=['POST'])
 def get_status():
     return assign_user_status()
