@@ -1,4 +1,4 @@
-from .backend_api.create_user import add_user, get_update_users
+from .backend_api.create_user import add_user, get_update_users, create_new_user_by_admin
 from .backend_api.login_api import get_user
 from .backend_api.logout_api import signout
 from .backend_api.deposit import get_deposit
@@ -116,3 +116,8 @@ def get_status():
 @authentication_blueprint.route('/api/get_users_all', methods=['GET'])
 def get_all_users():
     return get_users()
+
+# Create new user by administrator
+@authentication_blueprint.route('/api/create_user_done_by_admini', methods=['GET'])
+def create_user_administrator():
+    return create_new_user_by_admin()
