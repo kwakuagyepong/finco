@@ -10,6 +10,7 @@ from .backend_api.passwords import assign_password,update_password
 from .backend_api.all_users import get_all_teller
 from .backend_api.user_status import assign_user_status
 from .backend_api.admin_functions import get_users
+from .backend_api.managers import add_user_manager, get_all_managers,get_credit_union_managers
 
 
 from flask import Blueprint, jsonify, request, session
@@ -105,8 +106,8 @@ def update_user_all():
 @authentication_blueprint.route('/api/change_password', methods=['POST'])
 def change_password():
     return update_password()
-
-
+ 
+    
 # Update status of credit union
 @authentication_blueprint.route('/api/set_user_status', methods=['POST'])
 def get_status():
@@ -119,6 +120,23 @@ def get_all_users():
     return get_users()
 
 # Create new user by administrator
-@authentication_blueprint.route('/api/create_user_done_by_admini', methods=['GET'])
+@authentication_blueprint.route('/api/create_user_done_by_admin', methods=['GET'])
 def create_user_administrator():
     return create_new_user_by_admin()
+
+
+# Assign a Manager by Admin
+@authentication_blueprint.route('/api/assign_a_manager', methods=['POST'])
+def assign_manager():
+    return add_user_manager()
+
+# Assign a Manager by Admin
+@authentication_blueprint.route('/api/get_all_credit_union_managers', methods=['GET'])
+def view_managers():
+    return get_all_managers()
+
+
+# Manager information with inner join credit union information and user information
+@authentication_blueprint.route('/api/credit_union_info_with_manager', methods=['GET'])
+def info_managers_credit_union():
+    return get_credit_union_managers()

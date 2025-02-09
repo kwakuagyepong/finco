@@ -143,7 +143,6 @@ class users_of_credit_union:
                             SELECT * FROM users_of_credit_union WHERE credit_union_user_id = %s ; 
                            """, (user_id_session,))
             get_user = cursor.fetchone()
-            
         return get_user
 
     
@@ -324,16 +323,93 @@ class Admin_use:
         
         except mysql.connector.Error as err:
             # Handle any database errors
-            print(f"Database error: {err}")
+            # print(f"Database error: {err}")
             return None
         except Exception as e:
             # Handle any other exceptions
             print(f"An error occurred: {e}")
             return None
+        
+    def set_manager(credit_Union,users_id,role):
+        try:
+            cursor = mysql.connection.cursor()
+            # Insert into managers table
+            cursor.execute("""
+                       INSERT INTO managers (users_id,credit_union_id) VALUES (%s, %s)
+                        """, (users_id,credit_Union))
+            
+             # Update role in credentials table
+            cursor.execute("UPDATE credentials SET role = %s WHERE Users_ID = %s",
+                           (role,users_id))
+            mysql.connection.commit()
+            cursor.close()
+            return {'Updated': users_id} 
+        except Exception as e:
+            print(e)  
+            return None
 
+    def all_credit_union_managers():
+        try:
+            # Assuming mysql.connection is already established and available
+            with mysql.connection.cursor() as cursor:
+                cursor.execute("""
+                            SELECT * FROM managers
+                            """,)
+                get_credentials_data = cursor.fetchall()
+            # Return the fetched data (could be None if no data is found)
+            return get_credentials_data
+        
+        except Exception as e:
+            # Handle any other exceptions
+            print(f"An error occurred: {e}")
+            return None
+        
 
+    def view_manager_information():
+        try:
+            # Assuming mysql.connection is already established and available
+            with mysql.connection.cursor() as cursor:
+                cursor.execute("""
+                            SELECT 
+                                    managers.id AS manager_id,
+                                    users_of_credit_union.first_name,
+                                    users_of_credit_union.last_name,
+                                    users_of_credit_union.status,
+                                    creditunions.name AS credit_union_name,
+                                    creditunions.address,
+                                    creditunions.credit_union_id, 
+                                    creditunions.phone_number,
+                                    creditunions.Status
+                                    creditunions.email
+                                FROM managers
+                                INNER JOIN users_of_credit_union ON managers.users_id = users_of_credit_union.credit_union_user_id
+                                INNER JOIN creditunions ON managers.credit_union_id = creditunions.credit_union_id; 
+                            """,)
+                get_credentials_data = cursor.fetchall()
+            # Return the fetched data (could be None if no data is found)
+            return get_credentials_data
+        
+        except Exception as e:
+            # Handle any other exceptions
+            print(f"An error occurred: {e}")
+            return None
+        
 
-
+    def check_existing_user(users_id):
+        try:
+            # Assuming mysql.connection is already established and available
+            with mysql.connection.cursor() as cursor:
+                cursor.execute("""
+                            SELECT * FROM managers WHERE users_id = %s
+                            """,(users_id,))
+                get_credentials_data = cursor.fetchone()
+            # Return the fetched data (could be None if no data is found)
+            return get_credentials_data
+        
+        except Exception as e:
+            # Handle any other exceptions
+            print(f"An error occurred: {e}")
+            return None
 
 
 
