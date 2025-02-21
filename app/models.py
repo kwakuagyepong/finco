@@ -79,9 +79,25 @@ class disbursingfunds:
         with mysql.connection.cursor() as cursor:
             cursor.execute("""
                             SELECT * FROM transactions WHERE TRANSACTION_ID = %s ; 
-                           """, (transaction_ID))
+                           """, (transaction_ID,))
             full_confirmation = cursor.fetchone()
         return full_confirmation
+    
+    def update_transaction_status(transaction_ID, status):
+        try:
+            cursor = mysql.connection.cursor()
+            cursor.execute("UPDATE transactions SET status = %s WHERE TRANSACTION_ID = %s",
+                           (status, transaction_ID))
+            mysql.connection.commit()
+            cursor.close()
+            return {'Updated': transaction_ID}
+        except Exception as e:
+            print(e)
+            return None
+    
+
+    
+
 
 
 class all_transactions_teller:
@@ -287,6 +303,66 @@ class checks:
     #         get_credentials_data = cursor.fetchone()
     #     return get_credentials_data
 
+class accounts:
+    def get_credit_union_accounts():
+        try:
+            # Assuming mysql.connection is already established and available
+            with mysql.connection.cursor() as cursor:
+                cursor.execute("""
+                            SELECT * FROM accounts
+                            """,)
+                get_credit_union_accounts_data = cursor.fetchall()
+            # Return the fetched data (could be None if no data is found)
+            return get_credit_union_accounts_data
+        
+        except Exception as e:
+            # Handle any other exceptions
+            print(f"An error occurred: {e}")
+            return None
+        
+    def get_account_data_for_disburse_destination_creditunion(CREDIT_UNION_DESTINATION_ID):
+        try:
+            # Assuming mysql.connection is already established and available
+            with mysql.connection.cursor() as cursor:
+                cursor.execute("""
+                            SELECT * FROM accounts WHERE credit_union_id = %s;
+                            """,(CREDIT_UNION_DESTINATION_ID,))
+                account_data = cursor.fetchone()
+            # Return the fetched data (could be None if no data is found)
+            return account_data
+
+        except Exception as e:
+            # Handle any other exceptions
+            print(f"An error occurred: {e}")
+            return None
+        
+    def get_account_data_for_disburse_originating_creditunion(CREDIT_UNION_ORIGINATING_ID):
+        try:
+            # Assuming mysql.connection is already established and available
+            with mysql.connection.cursor() as cursor:
+                cursor.execute("""
+                            SELECT * FROM accounts WHERE credit_union_id = %s;
+                            """,(CREDIT_UNION_ORIGINATING_ID,))
+                account_data = cursor.fetchone()
+            # Return the fetched data (could be None if no data is found)
+            return account_data
+
+        except Exception as e:
+            # Handle any other exceptions
+            print(f"An error occurred: {e}")
+            return None
+    
+    def update_account_amount_for_orginating_and_destination(CREDIT_UNION_ORIGINATING_ID,account_amount_update_for_originating_crediunion,CREDIT_UNION_DESTINATION_ID ,account_amount_update_for_destination_crediunion):
+        try:
+            cursor = mysql.connection.cursor()
+            cursor.execute("UPDATE accounts SET amount = CASE WHEN credit_union_id = %s THEN %s WHEN credit_union_id = %s THEN %s ELSE amount END WHERE credit_union_id IN (%s, %s);",
+                           (CREDIT_UNION_ORIGINATING_ID, account_amount_update_for_originating_crediunion, CREDIT_UNION_DESTINATION_ID, account_amount_update_for_destination_crediunion, CREDIT_UNION_ORIGINATING_ID, CREDIT_UNION_DESTINATION_ID))
+            mysql.connection.commit()
+            cursor.close()
+            return {'Updated': [CREDIT_UNION_ORIGINATING_ID, CREDIT_UNION_DESTINATION_ID]}
+        except Exception as e:
+            print(e)
+            return None
         
 
 class Admin_use:
@@ -379,7 +455,7 @@ class Admin_use:
                                     creditunions.address,
                                     creditunions.credit_union_id, 
                                     creditunions.phone_number,
-                                    creditunions.Status
+                                    creditunions.Status,
                                     creditunions.email
                                 FROM managers
                                 INNER JOIN users_of_credit_union ON managers.users_id = users_of_credit_union.credit_union_user_id
@@ -410,6 +486,24 @@ class Admin_use:
             # Handle any other exceptions
             print(f"An error occurred: {e}")
             return None
+    
+    def get_transaction_charge():
+        try:
+            # Assuming mysql.connection is already established and available
+            with mysql.connection.cursor() as cursor:
+                cursor.execute("""
+                            SELECT * FROM transaction_charges
+                            """,)
+                get_transaction_charge_data = cursor.fetchone()
+            # Return the fetched data (could be None if no data is found)
+            return get_transaction_charge_data
+        
+        except Exception as e:
+            # Handle any other exceptions
+            print(f"An error occurred: {e}")
+            return None
+    
+
 
 
 
