@@ -126,7 +126,7 @@ class all_transactions_on_transations_page_teller:
                                         WHEN t.ORIGINATING_MANAGER_ID IS NOT NULL AND t.DESTINATION_MANAGER_ID IS NULL THEN 'OM Approved'
                                         WHEN t.ORIGINATING_MANAGER_ID IS NULL AND t.DESTINATION_MANAGER_ID IS NOT NULL THEN 'DM Approved'
                                         WHEN t.ORIGINATING_MANAGER_ID IS NOT NULL AND t.DESTINATION_MANAGER_ID IS NOT NULL THEN 'Approved'
-                                    END AS status
+                                    END AS STATUS
                                 FROM transactions t
                                 LEFT JOIN users_of_credit_union uo 
                                     ON t.ORIGINATING_MANAGER_ID = uo.credit_union_user_id
