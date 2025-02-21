@@ -60,20 +60,25 @@ def get_all_transactions_teller_pending():
             formatted_transaction = [
                 {   
                     'result': {
-                        'AMOUNT' : row[4],
-                        'CREDIT_UNION_DESTINATION_ID': row[8],
-                        'CREDIT_UNION_ORIGINATING_ID': row[9],
+                        'TRANSACTION_ID': row[0],
                         'CUSTOMER_FIRST_NAME' : row[1],
                         'CUSTOMER_LAST_NAME' : row[2],
+                        'TRANSACTION_TYPE' : row[3],
+                        'AMOUNT' : row[4],
                         'ACCOUNT_NUMBER' : row[5],
                         'CUSTOMER_ID' : row[6],
                         'CUSTOMER_ID_CARD_IMAGE' : get_image_base64(row[7]),
+                        'CREDIT_UNION_DESTINATION_ID': row[8],
+                        'CREDIT_UNION_ORIGINATING_ID': row[9],
+                        'TELLER_ID': row[10],
+                        'ORIGINATING_MANAGER_ID': row[11],
+                        'DESTINATION_MANAGER_ID': row[12],
                         'TIMESTAMP': row[13],
-                        'TRANSACTION_ID': row[0],
-                        'TRANSACTION_TYPE' : row[3],
-                        'ORIGINATING_MANAGER_ID': row[15],
-                        'DESTINATION_MANAGER_ID': row[16],
-                        'STATUS' : row[17]
+                        # 'DATE': row[14],
+                        # 'status_transaction': row[15],
+                        'ORIGINATING_MANAGER_NAME': row[16],
+                        'DESTINATION_MANAGER_NAME': row[17],
+                        'STATUS' : row[18]
                     },
                     'status_code': 200
                 }
