@@ -86,7 +86,7 @@ class disbursingfunds:
     def update_transaction_status(transaction_ID, status):
         try:
             cursor = mysql.connection.cursor()
-            cursor.execute("UPDATE transactions SET status = %s WHERE TRANSACTION_ID = %s",
+            cursor.execute("UPDATE transactions SET status_transaction = %s WHERE TRANSACTION_ID = %s",
                            (status, transaction_ID))
             mysql.connection.commit()
             cursor.close()
