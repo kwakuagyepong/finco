@@ -379,7 +379,7 @@ class Admin_use:
                                     creditunions.address,
                                     creditunions.credit_union_id, 
                                     creditunions.phone_number,
-                                    creditunions.Status
+                                    creditunions.Status,
                                     creditunions.email
                                 FROM managers
                                 INNER JOIN users_of_credit_union ON managers.users_id = users_of_credit_union.credit_union_user_id
