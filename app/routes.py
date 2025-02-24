@@ -16,7 +16,7 @@ from .backend_api.managers import add_user_manager, get_all_managers,get_credit_
 from flask import Blueprint, jsonify, request, session
 # from app.controller import AuthenticationController
 
-# from flask_cors import CORS
+#from flask_cors import CORS
 
 
 authentication_blueprint = Blueprint('users', __name__)
@@ -48,7 +48,7 @@ def deposit_and_withdraw():
     return get_deposit()
 
 
-@authentication_blueprint.route('/api/disbursefunds', methods=['GET'])
+@authentication_blueprint.route('/api/disbursefunds', methods=['POST'])
 def get_funds():
     return get_funds_data()
 
