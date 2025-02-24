@@ -42,9 +42,9 @@ def get_all_transactions_teller():
     return jsonify({'error': 'Only teller can access this', 'status_code': 404}), 404
         
 
-
+# Get data of transations for specific credit unions (where status = not-disbursed) is will be displayed on the transactions page
 def get_all_transactions_teller_pending():
-    role = ["teller", "manager", "admin"]
+    role = ["teller", "manager"]
     assigned_role = session['role']
 
     if assigned_role in role:
@@ -54,7 +54,7 @@ def get_all_transactions_teller_pending():
 
         # Fetch transactions
         transactions_results = all_transactions_on_transations_page_teller.all_transactions_transactions_page_by_teller(credit_union_id,credit_union_id_repeat)
-        # print('Before edit', transactions_results)
+        
         
         if transactions_results:
             formatted_transaction = [
@@ -75,7 +75,7 @@ def get_all_transactions_teller_pending():
                         'DESTINATION_MANAGER_ID': row[12],
                         'TIMESTAMP': row[13],
                         # 'DATE': row[14],
-                        # 'status_transaction': row[15],
+                        'status_transaction': row[15],
                         'ORIGINATING_MANAGER_NAME': row[16],
                         'DESTINATION_MANAGER_NAME': row[17],
                         'STATUS' : row[18]
@@ -92,10 +92,58 @@ def get_all_transactions_teller_pending():
 
 
 
+# Get data of transations for specific credit unions (where status = disbursed) is will be displayed on the statements page
+def get_all_transactions_statements():
+    role = ["teller", "manager"]
+    assigned_role = session['role']
+
+    if assigned_role in role:
+        credit_union_id = session['credit_union_id']
+        credit_union_id_repeat = credit_union_id
+        
+
+        # Fetch transactions
+        transactions_results = all_transactions_on_transations_page_teller.all_transactions_as_statement(credit_union_id,credit_union_id_repeat)
+        
+        
+        if transactions_results:
+            formatted_transaction = [
+                {   
+                    'result': {
+                        'TRANSACTION_ID': row[0],
+                        'CUSTOMER_FIRST_NAME' : row[1],
+                        'CUSTOMER_LAST_NAME' : row[2],
+                        'TRANSACTION_TYPE' : row[3],
+                        'AMOUNT' : row[4],
+                        'ACCOUNT_NUMBER' : row[5],
+                        'CUSTOMER_ID' : row[6],
+                        'CUSTOMER_ID_CARD_IMAGE' : get_image_base64(row[7]),
+                        'CREDIT_UNION_DESTINATION_ID': row[8],
+                        'CREDIT_UNION_ORIGINATING_ID': row[9],
+                        'TELLER_ID': row[10],
+                        'ORIGINATING_MANAGER_ID': row[11],
+                        'DESTINATION_MANAGER_ID': row[12],
+                        'TIMESTAMP': row[13],
+                        # 'DATE': row[14],
+                        'status_transaction': row[15],
+                        'ORIGINATING_MANAGER_NAME': row[16],
+                        'DESTINATION_MANAGER_NAME': row[17],
+                        'STATUS' : row[18]
+                    },
+                    'status_code': 200
+                }
+                for row in transactions_results
+            ]
+            return jsonify(formatted_transaction),200
+        else:
+            return jsonify({'error': 'No Transactions found', 'status_code': 404}), 404
+            
+    return jsonify({'error': 'Unauthorized access', 'status_code': 404}), 404
+
+
 def get_image_base64(image_filename):
     try:
         image_path = os.path.join(UPLOAD_FOLDER, image_filename)
-        print("Image Path", image_path)
         
         # Check if the image file exists
         if os.path.exists(image_path):
@@ -106,11 +154,12 @@ def get_image_base64(image_filename):
                 
                 # Return the base64 data as an image in base64 format
                 return f"data:image/png;base64,{encoded_string}"
-            print("Image Location", encoded_string)
         else:
-            print(f"Image file {image_filename} not found.")
             return None  # Image not found
     except Exception as e:
-        print(f"Error encoding image: {e}")
         return None  # Handle any errors during the process
+    
+
+
+
     
