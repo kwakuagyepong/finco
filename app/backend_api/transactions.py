@@ -75,7 +75,7 @@ def get_all_transactions_teller_pending():
                         'DESTINATION_MANAGER_ID': row[12],
                         'TIMESTAMP': row[13],
                         # 'DATE': row[14],
-                        # 'status_transaction': row[15],
+                        'status_transaction': row[15],
                         'ORIGINATING_MANAGER_NAME': row[16],
                         'DESTINATION_MANAGER_NAME': row[17],
                         'STATUS' : row[18]
