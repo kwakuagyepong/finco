@@ -92,53 +92,53 @@ def get_all_transactions_teller_pending():
 
 
 
-# Get data of transations for specific credit unions (where status = disbursed) is will be displayed on the statements page
-def get_all_transactions_statements():
-    role = ["teller", "manager"]
-    assigned_role = session['role']
+# # Get data of transations for specific credit unions (where status = disbursed) is will be displayed on the statements page
+# def get_all_transactions_statements():
+#     role = ["teller", "manager"]
+#     assigned_role = session['role']
 
-    if assigned_role in role:
-        credit_union_id = session['credit_union_id']
-        credit_union_id_repeat = credit_union_id
+#     if assigned_role in role:
+#         credit_union_id = session['credit_union_id']
+#         credit_union_id_repeat = credit_union_id
         
 
-        # Fetch transactions
-        transactions_results = all_transactions_on_transations_page_teller.all_transactions_as_statement(credit_union_id,credit_union_id_repeat)
+#         # Fetch transactions
+#         transactions_results = all_transactions_on_transations_page_teller.all_transactions_as_statement(credit_union_id,credit_union_id_repeat)
         
         
-        if transactions_results:
-            formatted_transaction = [
-                {   
-                    'result': {
-                        'TRANSACTION_ID': row[0],
-                        'CUSTOMER_FIRST_NAME' : row[1],
-                        'CUSTOMER_LAST_NAME' : row[2],
-                        'TRANSACTION_TYPE' : row[3],
-                        'AMOUNT' : row[4],
-                        'ACCOUNT_NUMBER' : row[5],
-                        'CUSTOMER_ID' : row[6],
-                        'CUSTOMER_ID_CARD_IMAGE' : get_image_base64(row[7]),
-                        'CREDIT_UNION_DESTINATION_ID': row[8],
-                        'CREDIT_UNION_ORIGINATING_ID': row[9],
-                        'TELLER_ID': row[10],
-                        'ORIGINATING_MANAGER_ID': row[11],
-                        'DESTINATION_MANAGER_ID': row[12],
-                        'TIMESTAMP': row[13],
-                        # 'DATE': row[14],
-                        'status_transaction': row[15],
-                        'ORIGINATING_MANAGER_NAME': row[16],
-                        'DESTINATION_MANAGER_NAME': row[17],
-                        'STATUS' : row[18]
-                    },
-                    'status_code': 200
-                }
-                for row in transactions_results
-            ]
-            return jsonify(formatted_transaction),200
-        else:
-            return jsonify({'error': 'No Transactions found', 'status_code': 404}), 404
+#         if transactions_results:
+#             formatted_transaction = [
+#                 {   
+#                     'result': {
+#                         'TRANSACTION_ID': row[0],
+#                         'CUSTOMER_FIRST_NAME' : row[1],
+#                         'CUSTOMER_LAST_NAME' : row[2],
+#                         'TRANSACTION_TYPE' : row[3],
+#                         'AMOUNT' : row[4],
+#                         'ACCOUNT_NUMBER' : row[5],
+#                         'CUSTOMER_ID' : row[6],
+#                         'CUSTOMER_ID_CARD_IMAGE' : get_image_base64(row[7]),
+#                         'CREDIT_UNION_DESTINATION_ID': row[8],
+#                         'CREDIT_UNION_ORIGINATING_ID': row[9],
+#                         'TELLER_ID': row[10],
+#                         'ORIGINATING_MANAGER_ID': row[11],
+#                         'DESTINATION_MANAGER_ID': row[12],
+#                         'TIMESTAMP': row[13],
+#                         # 'DATE': row[14],
+#                         'status_transaction': row[15],
+#                         'ORIGINATING_MANAGER_NAME': row[16],
+#                         'DESTINATION_MANAGER_NAME': row[17],
+#                         'STATUS' : row[18]
+#                     },
+#                     'status_code': 200
+#                 }
+#                 for row in transactions_results
+#             ]
+#             return jsonify(formatted_transaction),200
+#         else:
+#             return jsonify({'error': 'No Transactions found', 'status_code': 404}), 404
             
-    return jsonify({'error': 'Unauthorized access', 'status_code': 404}), 404
+#     return jsonify({'error': 'Unauthorized access', 'status_code': 404}), 404
 
 
 def get_image_base64(image_filename):
