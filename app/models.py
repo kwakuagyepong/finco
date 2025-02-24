@@ -294,22 +294,18 @@ class checks:
             return None
 
 
-    # @staticmethod
-    # def check_for_data_for_credentials_tables(user_id):
-    #     with mysql.connection.cursor() as cursor:
-    #         cursor.execute("""
-    #                        SELECT * FROM credentials WHERE Users_ID = %s
-    #                        """, (user_id,))
-    #         get_credentials_data = cursor.fetchone()
-    #     return get_credentials_data
 
 class accounts:
+    # Get data on Credit Union Accounts with Inner join credit union name
     def get_credit_union_accounts():
         try:
             # Assuming mysql.connection is already established and available
             with mysql.connection.cursor() as cursor:
                 cursor.execute("""
-                            SELECT * FROM accounts
+                            SELECT accounts.*, creditunions.name AS credit_union_name
+                            FROM accounts
+                            INNER JOIN creditunions
+                            ON accounts.credit_union_id = creditunions.credit_union_id;
                             """,)
                 get_credit_union_accounts_data = cursor.fetchall()
             # Return the fetched data (could be None if no data is found)
@@ -319,7 +315,7 @@ class accounts:
             # Handle any other exceptions
             print(f"An error occurred: {e}")
             return None
-        
+        # ------------------------- For disbursing funds -------------------------
     def get_account_data_for_disburse_destination_creditunion(CREDIT_UNION_DESTINATION_ID):
         try:
             # Assuming mysql.connection is already established and available
@@ -363,7 +359,54 @@ class accounts:
         except Exception as e:
             print(e)
             return None
+        # ------------------------- For disbursing funds --------------------------------
+
+# Get data for Account Deposit History (This is for Admin Access)
+    def get_accounts_deposite_history():
+        try:
+            # Assuming mysql.connection is already established and available
+            with mysql.connection.cursor() as cursor:
+                cursor.execute("""
+                            SELECT * FROM account_deposit_history
+                            """,)
+                get_accounts_deposite_history_data = cursor.fetchall()
+            # Return the fetched data (could be None if no data is found)
+            return get_accounts_deposite_history_data
         
+        except Exception as e:
+            # Handle any other exceptions
+            print(f"An error occurred: {e}")
+            return None
+        
+# Get data for Account Deposit History (This is for Admin Access)
+    def get_accounts_deposite_history():
+        try:
+            # Assuming mysql.connection is already established and available
+            with mysql.connection.cursor() as cursor:
+                cursor.execute("""
+                            SELECT * FROM account_deposit_history
+                            """,)
+                get_accounts_deposite_history_data = cursor.fetchall()
+            # Return the fetched data (could be None if no data is found)
+            return get_accounts_deposite_history_data
+        
+        except Exception as e:
+            # Handle any other exceptions
+            print(f"An error occurred: {e}")
+            return None
+        
+# Insert into Account Deposit History
+    def insert_into_account_deposit_history(amount,credit_union_id,user_id):
+        try:
+            cursor = mysql.connection.cursor()
+            cursor.execute("INSERT INTO account_deposit_history (credit_union_id,amount,user_id) VALUES (%s,%s,%s)",
+                           (credit_union_id,amount,user_id))
+            mysql.connection.commit()
+            cursor.close()
+            return {'Credit Union': credit_union_id}
+        except Exception as e:
+            print(e)
+            return None
 
 class Admin_use:
     def all_users():
@@ -377,10 +420,6 @@ class Admin_use:
             # Return the fetched data (could be None if no data is found)
             return get_credentials_data
         
-        except mysql.connector.Error as err:
-            # Handle any database errors
-            print(f"Database error: {err}")
-            return None
         except Exception as e:
             # Handle any other exceptions
             print(f"An error occurred: {e}")
