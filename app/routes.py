@@ -5,12 +5,13 @@ from .backend_api.deposit import get_deposit
 from .backend_api.disburse_funds import get_disburse_funds
 from .backend_api.approve_transaction import get_approve_transaction
 from .backend_api.credit_union import get_creditunion,get_all_creditunion,register_creditunion
-from .backend_api.transactions import get_all_transactions_teller,get_all_transactions_teller_pending
+from .backend_api.transactions import get_all_transactions_teller,get_all_transactions_teller_pending,get_all_transactions_statements
 from .backend_api.passwords import assign_password,update_password
 from .backend_api.all_users import get_all_teller
 from .backend_api.user_status import assign_user_status
 from .backend_api.admin_functions import get_users
 from .backend_api.managers import add_user_manager, get_all_managers,get_credit_union_managers
+from .backend_api.accounts import account_data,account_data_deposit_history,account_data_deposit_history_specific_credit_union
 
 
 from flask import Blueprint, jsonify, request, session
@@ -83,10 +84,16 @@ def transactions_by_teller():
 
 
 
-# Show all transactions Viewed by Teller on Transactions page(START)
+# Show all transactions not disbursed on Transactions page 
 @authentication_blueprint.route('/api/all_transactions_pending/teller', methods=['GET'])
 def all_transactions():
     return get_all_transactions_teller_pending()
+
+
+# Show all transactions disbursed on statement page 
+@authentication_blueprint.route('/api/transactions_statements', methods=['GET'])
+def all_transactions_statement():
+    return get_all_transactions_statements()
 
 
 @authentication_blueprint.route('/api/assign_password', methods=['POST'])
@@ -140,3 +147,21 @@ def view_managers():
 @authentication_blueprint.route('/api/credit_union_info_with_manager', methods=['GET'])
 def info_managers_credit_union():
     return get_credit_union_managers()
+
+
+# Get all Credit Union account data
+@authentication_blueprint.route('/api/credit_union_account_access', methods=['GET'])
+def get_credit_union_account():
+    return account_data()
+
+
+# Get all Credit Union accounts data deposit history (Supper Admin)
+@authentication_blueprint.route('/api/all_account_deposit_history', methods=['GET'])
+def get_all_account_deposit_history():
+    return account_data_deposit_history()
+
+
+# Get specific Credit Union accounts data deposit history
+@authentication_blueprint.route('/api/specific_account_deposit_history', methods=['GET'])
+def get_specific_account_deposit_history():
+    return account_data_deposit_history_specific_credit_union()
