@@ -5,7 +5,7 @@ from .backend_api.deposit import get_deposit
 from .backend_api.disburse_funds import get_disburse_funds
 from .backend_api.approve_transaction import get_approve_transaction
 from .backend_api.credit_union import get_creditunion,get_all_creditunion,register_creditunion
-from .backend_api.transactions import get_all_transactions_teller,get_all_transactions_teller_pending,get_all_transactions_statements
+from .backend_api.transactions import get_all_transactions_teller,get_all_transactions_teller_pending
 from .backend_api.passwords import assign_password,update_password
 from .backend_api.all_users import get_all_teller
 from .backend_api.user_status import assign_user_status
@@ -90,10 +90,10 @@ def all_transactions():
     return get_all_transactions_teller_pending()
 
 
-# Show all transactions disbursed on statement page 
-@authentication_blueprint.route('/api/transactions_statements', methods=['GET'])
-def all_transactions_statement():
-    return get_all_transactions_statements()
+# # Show all transactions disbursed on statement page 
+# @authentication_blueprint.route('/api/transactions_statements', methods=['GET'])
+# def all_transactions_statement():
+#     return get_all_transactions_statements()
 
 
 @authentication_blueprint.route('/api/assign_password', methods=['POST'])
