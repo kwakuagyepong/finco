@@ -2,7 +2,7 @@ from .backend_api.create_user import add_user, get_update_users, create_new_user
 from .backend_api.login_api import get_user
 from .backend_api.logout_api import signout
 from .backend_api.deposit import get_deposit
-from .backend_api.disburse_funds import get_funds_data
+from .backend_api.disburse_funds import get_disburse_funds
 from .backend_api.approve_transaction import get_approve_transaction
 from .backend_api.credit_union import get_creditunion,get_all_creditunion,register_creditunion
 from .backend_api.transactions import get_all_transactions_teller,get_all_transactions_teller_pending
@@ -50,7 +50,7 @@ def deposit_and_withdraw():
 
 @authentication_blueprint.route('/api/disbursefunds', methods=['GET'])
 def get_funds():
-    return get_funds_data()
+    return get_disburse_funds()
 
 
 @authentication_blueprint.route('/api/approve_transaction', methods=['POST'])
