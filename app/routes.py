@@ -83,17 +83,10 @@ def transactions_by_teller():
     return get_all_transactions_teller()
 
 
-
 # Show all transactions not disbursed on Transactions page 
 @authentication_blueprint.route('/api/all_transactions_pending/teller', methods=['GET'])
 def all_transactions():
     return get_all_transactions_teller_pending()
-
-
-# # Show all transactions disbursed on statement page 
-# @authentication_blueprint.route('/api/transactions_statements', methods=['GET'])
-# def all_transactions_statement():
-#     return get_all_transactions_statements()
 
 
 @authentication_blueprint.route('/api/assign_password', methods=['POST'])

@@ -137,31 +137,6 @@ class all_transactions_on_transations_page_teller:
             transaction_result = cursor.fetchall()
         return transaction_result
     
-    # # Get data of transactions for specific credit unions where status is disbursed 
-    # def all_transactions_as_statement(credit_union_id,credit_union_id_repeat):
-    #     with mysql.connection.cursor() as cursor:
-    #         cursor.execute("""
-    #                            SELECT 
-    #                                 t.*,
-    #                                 CONCAT(uo.first_name, ' ', uo.last_name) AS ORIGINATING_MANAGER_ID,
-    #                                 CONCAT(ud.first_name, ' ', ud.last_name) AS DESTINATION_MANAGER_ID,
-    #                                 CASE
-    #                                     WHEN t.ORIGINATING_MANAGER_ID IS NULL AND t.DESTINATION_MANAGER_ID IS NULL THEN 'pending'
-    #                                     WHEN t.ORIGINATING_MANAGER_ID IS NOT NULL AND t.DESTINATION_MANAGER_ID IS NULL THEN 'OM Approved'
-    #                                     WHEN t.ORIGINATING_MANAGER_ID IS NULL AND t.DESTINATION_MANAGER_ID IS NOT NULL THEN 'DM Approved'
-    #                                     WHEN t.ORIGINATING_MANAGER_ID IS NOT NULL AND t.DESTINATION_MANAGER_ID IS NOT NULL THEN 'Approved'
-    #                                 END AS STATUS
-    #                             FROM transactions t
-    #                             LEFT JOIN users_of_credit_union uo 
-    #                                 ON t.ORIGINATING_MANAGER_ID = uo.credit_union_user_id
-    #                             LEFT JOIN users_of_credit_union ud 
-    #                                 ON t.DESTINATION_MANAGER_ID = ud.credit_union_user_id
-    #                             WHERE (t.CREDIT_UNION_ORIGINATING_ID = %s OR t.CREDIT_UNION_DESTINATION_ID = %s) AND t.status_transaction = 'disbursed';
-    #         """, (credit_union_id,credit_union_id_repeat,))
-    #         transaction_result = cursor.fetchall()
-    #     return transaction_result
-        
-        
 
 class all_transaction_inbound:
     def get_inbound_transactions_all(creditunion_id):
