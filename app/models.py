@@ -190,7 +190,7 @@ class update_transaction:
 class add_a_user:
     def add_new_user(first_name, last_name, email, phone_number, credit_union, status):
         try:
-            print(first_name, last_name, email, phone_number, credit_union, status)
+            # print(first_name, last_name, email, phone_number, credit_union, status)
             cursor = mysql.connection.cursor()
             cursor.execute("INSERT INTO users_of_credit_union (first_name, last_name, email, phone_number, credit_union_id, status) VALUES (%s,%s,%s,%s,%s,%s)",
                            (first_name, last_name, email, phone_number, credit_union, status))
@@ -202,7 +202,7 @@ class add_a_user:
             print(e)
             return None
 
-
+# Assign Passwords
 class new_passwords:
     def get_password(user_id, teller, hashed_password):
         try:
@@ -217,7 +217,7 @@ class new_passwords:
         except Exception as e:
             print(e)
             return None
-        
+
     def change_password(the_credentials,hashed_password):
         try:
             print("After encyption: ", the_credentials,hashed_password)

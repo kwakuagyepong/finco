@@ -26,10 +26,10 @@ def assign_password():
         role_assigning = "teller"
  
         get_data = checks.check_for_data_for_credentials_tables(user_id)
-        print(get_data)
+        # print(get_data)
         if get_data: 
             the_credentials = get_data[0]
-            print("The user Id", the_credentials)
+            # print("The user Id", the_credentials)
             result_password = AuthenticationController.change_user_password(the_credentials,users_password)
         else:
             result_password = AuthenticationController.get_user_password(user_id,role_assigning,users_password) 
