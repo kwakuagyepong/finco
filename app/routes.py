@@ -9,7 +9,7 @@ from .backend_api.transactions import get_all_transactions_teller,get_all_transa
 from .backend_api.passwords import assign_password,update_password
 from .backend_api.all_users import get_all_teller
 from .backend_api.user_status import assign_user_status
-from .backend_api.admin_functions import get_users
+from .backend_api.admin_functions import get_users,get_credit_union_transactions
 from .backend_api.managers import add_user_manager, get_all_managers,get_credit_union_managers
 from .backend_api.accounts import account_data,account_data_deposit_history,account_data_deposit_history_specific_credit_union
 
@@ -158,3 +158,9 @@ def get_all_account_deposit_history():
 @authentication_blueprint.route('/api/specific_account_deposit_history', methods=['GET'])
 def get_specific_account_deposit_history():
     return account_data_deposit_history_specific_credit_union()
+
+# Get all Credit Union account history
+@authentication_blueprint.route('/api/admin_credit_union_account_history', methods=['GET'])
+def get_all_credit_union_transaction_history():
+    return get_credit_union_transactions()
+
