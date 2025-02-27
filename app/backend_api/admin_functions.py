@@ -60,9 +60,9 @@ def get_credit_union_transactions():
                         'TELLER':row[10],
                         'ORIGINATING_MANAGER_ID': row[11],
                         'DESTINATION_MANAGER_ID': row[12],
-                        'TIMESTAMP': row[13]
-                        # 'TIMESTAMP': row[13],
-                        # 'STATUS' : row[17]
+                        'TIMESTAMP': row[13],
+                        # 'TIMESTAMP': row[14],
+                        'STATUS' : row[15]
                     },
                     'status_code': 200
                 }
