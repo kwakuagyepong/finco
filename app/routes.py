@@ -19,24 +19,21 @@ from flask import Blueprint, jsonify, request, session
 
 #from flask_cors import CORS
 
-
 authentication_blueprint = Blueprint('users', __name__)
  
 # CORS(authentication_blueprint) 
 
-
 # New route to signup
 @authentication_blueprint.route('/api/users', methods=['POST'])
 def register_user():
-    return add_user()
-    
+    return add_user()    
      
 # Route to signin   
 @authentication_blueprint.route('/api/users/<string:email>/<string:password>', methods=['GET'])
 def signin_user(email, password):
     return get_user(email, password)
-
  
+
 # Route to Signout 
 @authentication_blueprint.route('/api/signout', methods=['POST'])
 def logout():
@@ -159,8 +156,11 @@ def get_all_account_deposit_history():
 def get_specific_account_deposit_history():
     return account_data_deposit_history_specific_credit_union()
 
-# Get all Credit Union account history
+
+# Get all Credit Union account history for admin 
 @authentication_blueprint.route('/api/admin_credit_union_account_history', methods=['GET'])
 def get_all_credit_union_transaction_history():
     return get_credit_union_transactions()
+
+
 

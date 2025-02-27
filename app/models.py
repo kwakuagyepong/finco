@@ -96,10 +96,6 @@ class disbursingfunds:
             return None
     
 
-    
-
-
-
 class all_transactions_teller:
     def get_transactions_all_teller(credit_union_id):
         with mysql.connection.cursor() as cursor:

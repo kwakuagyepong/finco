@@ -61,8 +61,13 @@ def get_credit_union_transactions():
                         'ORIGINATING_MANAGER_ID': row[11],
                         'DESTINATION_MANAGER_ID': row[12],
                         'TIMESTAMP': row[13],
+<<<<<<< HEAD
                         # 'TIMESTAMP': row[13],
                         'STATUS' : row[17]
+=======
+                        # 'TIMESTAMP': row[14],
+                        'STATUS' : row[15]
+>>>>>>> 1e2e9d709c9ab37ab5bba6fdc9930ed8b583f587
                     },
                     'status_code': 200
                 }
