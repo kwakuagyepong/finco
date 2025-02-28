@@ -14,18 +14,19 @@ def get_users():
     assigned_role = session['role']
 
     if assigned_role in role:
-        result_of_users = Admin_use.all_users()
+        result_of_users = Admin_use.all_users_full_data()
         if result_of_users:
             formatted = [
                 {
                     'results': {
-                        'id': row[0], 
-                        'First Name': row[1],
-                        'Last Name ': row[2], 
-                        'email': row[3], 
-                        'phone number': row[4],
-                        'credit Union' : row[5],
-                        'status' : row[6]
+                        'role': row[0], 
+                        'Users_ID': row[1],
+                        'First Name': row[2],
+                        'Last Name ': row[3], 
+                        'email': row[4], 
+                        'phone number': row[5],
+                        'status' : row[6],
+                        'credit_Union_name' : row[7]
                     },
                     'status_code': 200
                 }

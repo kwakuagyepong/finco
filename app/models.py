@@ -1,4 +1,5 @@
 from app.db import mysql 
+from flask import session
 
 class Authentication:
     
@@ -420,22 +421,36 @@ class accounts:
             return None
 
 class Admin_use:
-    def all_users():
-        try:
-            # Assuming mysql.connection is already established and available
-            with mysql.connection.cursor() as cursor:
-                cursor.execute("""
-                            SELECT * FROM users_of_credit_union
-                            """,)
-                get_credentials_data = cursor.fetchall()
-            # Return the fetched data (could be None if no data is found)
-            return get_credentials_data
+    def all_users_full_data():
+        assigned_role = session['role']
+
+        if assigned_role == 'admin':
+            try:
+                # Assuming mysql.connection is already established and available
+                with mysql.connection.cursor() as cursor:
+                    cursor.execute("""
+                                SELECT 
+                                        credentials.role, 
+                                        credentials.Users_ID, 
+                                        users_of_credit_union.First_name, 
+                                        users_of_credit_union.Last_name, 
+                                        users_of_credit_union.email, 
+                                        users_of_credit_union.phone_number, 
+                                        users_of_credit_union.status, 
+                                        creditunions.name
+                                    FROM credentials
+                                    INNER JOIN users_of_credit_union ON credentials.Users_ID = users_of_credit_union.credit_union_user_id
+                                    INNER JOIN creditunions ON users_of_credit_union.credit_union_id= creditunions.credit_union_id;
+                                """,)
+                    get_credentials_data = cursor.fetchall()
+                # Return the fetched data (could be None if no data is found)
+                return get_credentials_data
         
-        except Exception as e:
-            # Handle any other exceptions
-            print(f"An error occurred: {e}")
-            return None
-        
+            except Exception as e:
+                # Handle any other exceptions
+                print(f"An error occurred: {e}")
+                return None
+               
     def all_transactions():
         try:
             # Assuming mysql.connection is already established and available
@@ -552,7 +567,8 @@ class Admin_use:
             # Handle any other exceptions
             print(f"An error occurred: {e}")
             return None
-    
+        
+        
 
 
 
