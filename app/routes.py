@@ -117,7 +117,7 @@ def get_all_users():
     return get_users()
 
 # Create new user by administrator
-@authentication_blueprint.route('/api/create_user_done_by_admin', methods=['GET'])
+@authentication_blueprint.route('/api/create_user_done_by_admin', methods=['POST'])
 def create_user_administrator():
     return create_new_user_by_admin()
 
