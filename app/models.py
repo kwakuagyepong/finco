@@ -568,6 +568,30 @@ class Admin_use:
             print(f"An error occurred: {e}")
             return None
         
+    def updated_credit_union_status(Credit_Union_id,status):
+            try:
+                cursor = mysql.connection.cursor()
+                cursor.execute("UPDATE creditunions SET Status = %s WHERE credit_union_id = %s",
+                               (status, Credit_Union_id))
+                mysql.connection.commit()
+                cursor.close()
+                return {'Updated': Credit_Union_id}
+            except Exception as e:
+                print(e)    
+                return None
+            
+    def update_credit_union_data(Credit_Union_id,Credit_Union,address,phone_number,email):
+            try:
+                cursor = mysql.connection.cursor()
+                cursor.execute("UPDATE creditunions SET name = %s, address = %s, phone_number = %s, email = %s WHERE credit_union_id = %s",
+                               (Credit_Union,address,phone_number,email,Credit_Union_id))
+                mysql.connection.commit()
+                cursor.close()
+                return {'Updated': Credit_Union_id}
+            except Exception as e:
+                print(e)    
+                return None
+            
         
 
 

@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, session, request
-from app.models import CreditUnionmodel,all_CreditUnionmodels
+from app.models import CreditUnionmodel,all_CreditUnionmodels,Admin_use
 
 
 def get_creditunion():
@@ -47,7 +47,7 @@ def get_all_creditunion():
     else:
         return jsonify({'error': 'User not found', 'status_code': 404}), 404
     
-
+# Register a new Credit Union with Admin role
 def register_creditunion():
     role = "admin"
     assigned_role = session['role']
@@ -73,7 +73,56 @@ def register_creditunion():
                 return jsonify({'error': 'Failed to register', 'status_code': 500}), 500
     else:
         return jsonify({'error': 'Unauthorized user', 'status_code': 400}), 400
-    
+
+def update_creditunion_status():
+    role = "admin"
+    assigned_role = session['role']
+
+    if assigned_role == role:
+        required_fields = ['Credit_Union_id', 'status'] 
+        data = request.json
+        missing_fields = [field for field in required_fields if field not in data]
+        if missing_fields:
+            error_message = f"Missing fields: {', '.join(missing_fields)}"
+            return jsonify({'error': error_message, 'status_code': 400}), 400
+        
+        Credit_Union_id = data['Credit_Union_id']
+        status = data['status']
+
+        credit_union = Admin_use.updated_credit_union_status(Credit_Union_id,status)
+        if credit_union:
+            return jsonify({'message': 'Status updated successfully','status_code': 200}), 200
+        else:
+            return jsonify({'error': 'Failed to update', 'status_code': 500}), 500
+    else:
+        return jsonify({'error': 'Unauthorized user', 'status_code': 400}), 400
+
+
+def update_credit_union_information():
+    role = "admin"
+    assigned_role = session['role']
+
+    if assigned_role == role:
+        required_fields = ['Credit_Union_id', 'Credit_Union_name', 'address', 'phone_number', 'email'] 
+        data = request.json
+        missing_fields = [field for field in required_fields if field not in data]
+        if missing_fields:
+            error_message = f"Missing fields: {', '.join(missing_fields)}"
+            return jsonify({'error': error_message, 'status_code': 400}), 400
+        
+        Credit_Union_id = data['Credit_Union_id']
+        Credit_Union = data['Credit_Union_name']
+        address = data['address']
+        phone_number = data['phone_number']
+        email = data['email']
+
+        credit_union = Admin_use.update_credit_union_data(Credit_Union_id,Credit_Union,address,phone_number,email)
+        if credit_union:
+            return jsonify({'message': 'Credit Union updated successfully','status_code': 200}), 200
+        else:
+            return jsonify({'error': 'Failed to update', 'status_code': 500}), 500
+    else:
+        return jsonify({'error': 'Unauthorized user', 'status_code': 400}), 400
 
 
     

@@ -4,7 +4,7 @@ from .backend_api.logout_api import signout
 from .backend_api.deposit import get_deposit
 from .backend_api.disburse_funds import get_disburse_funds
 from .backend_api.approve_transaction import get_approve_transaction
-from .backend_api.credit_union import get_creditunion,get_all_creditunion,register_creditunion
+from .backend_api.credit_union import get_creditunion,get_all_creditunion,register_creditunion,update_creditunion_status,update_credit_union_information
 from .backend_api.transactions import get_all_transactions_teller,get_all_transactions_teller_pending
 from .backend_api.passwords import assign_password,update_password
 from .backend_api.all_users import get_all_teller
@@ -94,7 +94,7 @@ def password_get():
 def user_all():
     return get_all_teller()    
 
-
+# Update user information
 @authentication_blueprint.route('/api/update_user', methods=['POST'])
 def update_user_all():
     return get_update_users()
@@ -117,7 +117,7 @@ def get_all_users():
     return get_users()
 
 # Create new user by administrator
-@authentication_blueprint.route('/api/create_user_done_by_admin', methods=['GET'])
+@authentication_blueprint.route('/api/create_user_done_by_admin', methods=['POST'])
 def create_user_administrator():
     return create_new_user_by_admin()
 
@@ -161,6 +161,18 @@ def get_specific_account_deposit_history():
 @authentication_blueprint.route('/api/admin_credit_union_account_history', methods=['GET'])
 def get_all_credit_union_transaction_history():
     return get_credit_union_transactions()
+
+# Get Updated Credit Union status for admin 
+@authentication_blueprint.route('/api/creditunion_status_update', methods=['POST'])
+def post_credit_union_status():
+    return update_creditunion_status()
+
+# Get Updated Credit Union information for admin 
+@authentication_blueprint.route('/api/creditunion_information_update', methods=['POST'])
+def credit_union_information_update():
+    return update_credit_union_information()
+
+# Update user information 
 
 
 
