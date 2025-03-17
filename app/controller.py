@@ -12,14 +12,14 @@ class AuthenticationController:
     def add_user(email, password):
         hashed_password = AuthenticationController.hash_password(password)
         return Authentication.add_user(email, hashed_password)
-    
+
     # New method to signin
     @staticmethod
     def get_user(email, password):
         hashed_password = AuthenticationController.hash_password(password)
         return Authentication.get_a_user(email, hashed_password)
     
-        # New method to signin
+        # New method to signin by Teller
     @staticmethod
     def get_user_password(user_id, teller, users_password):
         hashed_password = AuthenticationController.hash_password(users_password)
@@ -29,7 +29,7 @@ class AuthenticationController:
     def change_user_password(the_credentials,users_password):
         hashed_password = AuthenticationController.hash_password(users_password)
         return new_passwords.change_password(the_credentials,hashed_password)
-    
+
 
     
      
