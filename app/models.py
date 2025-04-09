@@ -62,11 +62,11 @@ class all_CreditUnionmodels:
             return creditunion_result
         
             
-        def register_the_creditunion(Credit_Union,address,phone_number,email,status):
+        def register_the_creditunion(Credit_Union,address,address_2,phone_number,email,status):
             try:
                 cursor = mysql.connection.cursor()
-                cursor.execute("INSERT INTO creditunions (name,address,phone_number,email,Status) VALUES (%s,%s,%s,%s,%s)",
-                            (Credit_Union,address,phone_number,email,status))
+                cursor.execute("INSERT INTO creditunions (name,address,address_2,phone_number,email,Status) VALUES (%s,%s,%s,%s,%s,%s)",
+                            (Credit_Union,address,address_2,phone_number,email,status))
                 
                 mysql.connection.commit()
                 cursor.close()

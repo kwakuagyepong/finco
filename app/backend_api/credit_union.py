@@ -53,7 +53,7 @@ def register_creditunion():
     assigned_role = session['role']
 
     if assigned_role == role:
-            required_fields = ['Credit_Union', 'address', 'phone_number', 'email'] 
+            required_fields = ['Credit_Union', 'address','address_2', 'phone_number', 'email'] 
             data = request.json
             missing_fields = [field for field in required_fields if field not in data]
             if missing_fields:
@@ -62,11 +62,12 @@ def register_creditunion():
             
             Credit_Union = data['Credit_Union']
             address = data['address']
+            address_2 = data['address_2']
             phone_number = data['phone_number']
             email = data['email']
             status = "disabled"
 
-            credit_union = all_CreditUnionmodels.register_the_creditunion(Credit_Union,address,phone_number,email,status)
+            credit_union = all_CreditUnionmodels.register_the_creditunion(Credit_Union,address,address_2,phone_number,email,status)
             if credit_union:
                 return jsonify({'message': 'Credit Union registered successfully','status_code': 200}), 200
             else:
