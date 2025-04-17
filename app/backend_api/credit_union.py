@@ -13,8 +13,9 @@ def get_creditunion():
                       'id': row[0], 
                       'Credit Union': row[1],
                       'Location': row[2], 
-                      'Phone Number': row[3], 
-                      'Email': row[4],
+                      'Location_2': row[3], 
+                      'Phone Number': row[4], 
+                      'Email': row[5],
                 },
                  'status_code': 200
             }
@@ -98,13 +99,14 @@ def update_creditunion_status():
     else:
         return jsonify({'error': 'Unauthorized user', 'status_code': 400}), 400
 
-
+# Update the creditunion information with Admin role
+# This function is used to update the credit union information by the admin role
 def update_credit_union_information():
     role = "admin"
     assigned_role = session['role']
 
     if assigned_role == role:
-        required_fields = ['Credit_Union_id', 'Credit_Union_name', 'address', 'phone_number', 'email'] 
+        required_fields = ['Credit_Union_id', 'Credit_Union_name', 'address', 'address_2','phone_number', 'email'] 
         data = request.json
         missing_fields = [field for field in required_fields if field not in data]
         if missing_fields:
@@ -114,10 +116,11 @@ def update_credit_union_information():
         Credit_Union_id = data['Credit_Union_id']
         Credit_Union = data['Credit_Union_name']
         address = data['address']
+        address_2 = data['address_2']
         phone_number = data['phone_number']
         email = data['email']
 
-        credit_union = Admin_use.update_credit_union_data(Credit_Union_id,Credit_Union,address,phone_number,email)
+        credit_union = Admin_use.update_credit_union_data(Credit_Union_id,Credit_Union,address,address_2,phone_number,email)
         if credit_union:
             return jsonify({'message': 'Credit Union updated successfully','status_code': 200}), 200
         else:

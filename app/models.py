@@ -580,17 +580,33 @@ class Admin_use:
                 print(e)    
                 return None
             
-    def update_credit_union_data(Credit_Union_id,Credit_Union,address,phone_number,email):
+    def update_credit_union_data(Credit_Union_id,Credit_Union,address,address_2,phone_number,email):
             try:
                 cursor = mysql.connection.cursor()
-                cursor.execute("UPDATE creditunions SET name = %s, address = %s, phone_number = %s, email = %s WHERE credit_union_id = %s",
-                               (Credit_Union,address,phone_number,email,Credit_Union_id))
+                cursor.execute("UPDATE creditunions SET name = %s, address = %s,address_2 = %s, phone_number = %s, email = %s WHERE credit_union_id = %s",
+                               (Credit_Union,address,address_2,phone_number,email,Credit_Union_id))
                 mysql.connection.commit()
                 cursor.close()
                 return {'Updated': Credit_Union_id}
             except Exception as e:
                 print(e)    
                 return None
+            
+    def get_cup_amount(credit_union_id):
+        try:
+            # Assuming mysql.connection is already established and available
+            with mysql.connection.cursor() as cursor:
+                cursor.execute("""
+                            SELECT * FROM amount_cup WHERE Credit_Union_id = %s
+                            """,(credit_union_id,))
+                get_amount_cup = cursor.fetchone()
+            # Return the fetched data (could be None if no data is found)
+            return get_amount_cup
+        
+        except Exception as e:
+            # Handle any other exceptions
+            print(f"An error occurred: {e}")
+            return None
             
         
 
