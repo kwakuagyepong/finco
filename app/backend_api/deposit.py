@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request, session
-from app.models import CreditUnion_deposit
+from app.models import CreditUnion_deposit,Admin_use
 from datetime import datetime
 from PIL import Image 
 import base64
@@ -55,9 +55,17 @@ def get_deposit():
             print(f"Failed to save image: {e}")
             return jsonify({'error': 'Failed to save customer ID image', 'status_code': 500}), 500
 
-        
+        # Get the cap amount for the originating credit union
+        check_amount_cap = Admin_use.get_cap_amount(credit_union_originating_id)
+        capped_amount = check_amount_cap[1]
+        print("CUP Amount", capped_amount)
+        # If the amount is below the cap amount, bypass the originating manager approval
+        if amount <= capped_amount:
+            originating_manager_id = "SYSTEM"
+        else:
+            originating_manager_id = ""
         # print('destination id', credit_union_destination_id)
-        full_transaction = CreditUnion_deposit.push_transaction_desopit(first_name, last_name, transaction_type, amount, account_number, customer_id_number, filenamedb, credit_union_destination_id, credit_union_originating_id, teller_name_id, date)
+        full_transaction = CreditUnion_deposit.push_transaction_desopit(first_name, last_name, transaction_type, amount, account_number, customer_id_number, filenamedb, credit_union_destination_id, credit_union_originating_id, teller_name_id, date,originating_manager_id)
 
         if full_transaction:
             return jsonify({'message': 'Transaction submitted', 'status_code': 200}), 200

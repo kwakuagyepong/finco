@@ -29,11 +29,11 @@ class Authentication:
 
 # Deposit Method
 class CreditUnion_deposit:
-    def push_transaction_desopit(first_name, last_name, transaction_type, amount, account_number, customer_id_number, customer_id_image, credit_union_destination_id, credit_union_originating_id, teller_name_id, date):
+    def push_transaction_desopit(first_name, last_name, transaction_type, amount, account_number, customer_id_number, customer_id_image, credit_union_destination_id, credit_union_originating_id, teller_name_id, date,originating_manager_id):
         try:
             cursor = mysql.connection.cursor()
-            cursor.execute("INSERT INTO transactions (CUSTOMER_FIRST_NAME, CUSTOMER_LAST_NAME, TRANSACTION_TYPE, AMOUNT, ACCOUNT_NUMBER, CUSTOMER_ID, CUSTOMER_ID_CARD_IMAGE, CREDIT_UNION_DESTINATION_ID, CREDIT_UNION_ORIGINATING_ID, TELLER_NAME, DATE) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
-                           (first_name, last_name, transaction_type, amount, account_number, customer_id_number, customer_id_image, credit_union_destination_id, credit_union_originating_id, teller_name_id, date))
+            cursor.execute("INSERT INTO transactions (CUSTOMER_FIRST_NAME, CUSTOMER_LAST_NAME, TRANSACTION_TYPE, AMOUNT, ACCOUNT_NUMBER, CUSTOMER_ID, CUSTOMER_ID_CARD_IMAGE, CREDIT_UNION_DESTINATION_ID, CREDIT_UNION_ORIGINATING_ID, TELLER_NAME, DATE, ORIGINATING_MANAGER_ID) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
+                           (first_name, last_name, transaction_type, amount, account_number, customer_id_number, customer_id_image, credit_union_destination_id, credit_union_originating_id, teller_name_id, date,originating_manager_id))
             mysql.connection.commit()
             cursor.close()
             return {'Customer Name': first_name}
