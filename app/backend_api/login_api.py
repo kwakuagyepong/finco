@@ -29,8 +29,5 @@ def get_user(email, password):
                 },'status_code': 200}), 200
         else:
             return jsonify({'error': 'User role not assigned', 'status_code': 403}), 403
-
-            
-
     else:
         return jsonify({'error': 'Wrong email or password', 'status_code': 404}), 404

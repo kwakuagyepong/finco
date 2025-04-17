@@ -172,7 +172,7 @@ def post_credit_union_status():
 def credit_union_information_update():
     return update_credit_union_information()
 
-# Update user information 
+
 
 
 
