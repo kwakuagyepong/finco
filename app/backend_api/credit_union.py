@@ -12,8 +12,8 @@ def get_creditunion():
                 'results': {
                       'id': row[0], 
                       'Credit Union': row[1],
-                      'Location': row[2], 
-                      'Location_2': row[3], 
+                      'address': row[2], 
+                      'address_2': row[3], 
                       'Phone Number': row[4], 
                       'Email': row[5],
                 },
@@ -36,8 +36,8 @@ def get_all_creditunion():
                 'results': {
                       'id': row[0], 
                       'Credit Union': row[1],
-                      'Location': row[2], 
-                      'Location_2': row[3],
+                      'address': row[2], 
+                      'address_2': row[3],
                       'Phone Number': row[4], 
                       'Email': row[5]
                 },
