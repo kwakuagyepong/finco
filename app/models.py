@@ -593,13 +593,13 @@ class Admin_use:
                 print(e)    
                 return None
             
-    def get_cup_amount(credit_union_id):
+    def get_cap_amount(CREDIT_UNION_ORIGINATING_ID):
         try:
             # Assuming mysql.connection is already established and available
             with mysql.connection.cursor() as cursor:
                 cursor.execute("""
-                            SELECT * FROM amount_cup WHERE Credit_Union_id = %s
-                            """,(credit_union_id,))
+                            SELECT * FROM amount_cup WHERE credit_union_id = %s
+                            """,(CREDIT_UNION_ORIGINATING_ID,))
                 get_amount_cup = cursor.fetchone()
             # Return the fetched data (could be None if no data is found)
             return get_amount_cup
