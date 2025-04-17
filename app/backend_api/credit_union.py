@@ -41,15 +41,9 @@ def get_all_creditunion():
                       'id': row[0], 
                       'Credit Union': row[1],
                       'Location': row[2], 
-<<<<<<< HEAD
-                      'Phone Number': row[3], 
-                      'Email': row[4],
-                      'Status': row[5]
-=======
                       'Location_2': row[3],
                       'Phone Number': row[4], 
                       'Email': row[5]
->>>>>>> aaea99213a588a776d1d1ab752cffaead8a5a4bf
                 },
                  'status_code': 200
             }
