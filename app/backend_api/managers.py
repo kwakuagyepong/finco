@@ -74,10 +74,11 @@ def get_credit_union_managers():
                             'user_status': row[3], 
                             'credit_union_name': row[4],
                             'address': row[5],
-                            'credit_union_id': row[6],
-                            'phone_number': row[7],
-                            'credit_union_status': row[8],
-                            'credit_union_email': row[9]
+                            'address_2': row[6],
+                            'credit_union_id': row[7],
+                            'phone_number': row[8],
+                            'credit_union_status': row[9],
+                            'credit_union_email': row[10]
                         },
                         'status_code': 200
                     }
