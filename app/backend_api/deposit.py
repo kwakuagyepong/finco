@@ -56,8 +56,9 @@ def get_deposit():
             return jsonify({'error': 'Failed to save customer ID image', 'status_code': 500}), 500
 
         # Get the cap amount for the originating credit union
-        check_amount_cap = Admin_use.get_cap_amount(credit_union_originating_id)
-        capped_amount = check_amount_cap[1]
+        CREDIT_UNION_ORIGINATING_ID = credit_union_originating_id
+        check_amount_cap = Admin_use.get_cap_amount(CREDIT_UNION_ORIGINATING_ID)
+        capped_amount = check_amount_cap[2]
         print("CUP Amount", capped_amount)
         # If the amount is below the cap amount, bypass the originating manager approval
         if amount <= capped_amount:

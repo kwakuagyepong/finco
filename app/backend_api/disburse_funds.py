@@ -35,7 +35,7 @@ def get_disburse_funds():
             
             # Get the cap amount for the originating credit union
             check_amount_cap = Admin_use.get_cap_amount(CREDIT_UNION_ORIGINATING_ID)
-            capped_amount = check_amount_cap[1]
+            capped_amount = check_amount_cap[2]
             print("CUP Amount", capped_amount)
 
             if AMOUNT <= capped_amount:
