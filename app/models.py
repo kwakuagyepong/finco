@@ -518,6 +518,7 @@ class Admin_use:
                                     users_of_credit_union.status,
                                     creditunions.name AS credit_union_name,
                                     creditunions.address,
+                                    creditunions.address_2,
                                     creditunions.credit_union_id, 
                                     creditunions.phone_number,
                                     creditunions.Status,
