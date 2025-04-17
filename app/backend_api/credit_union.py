@@ -26,8 +26,12 @@ def get_creditunion():
     
 
 def get_all_creditunion():
-    results = all_CreditUnionmodels.get_all_credit_unions()
+    
+    role = ["admin","manager","teller"]
+    assigned_role = session['role']
 
+    if assigned_role in role:
+        results = all_CreditUnionmodels.get_all_credit_unions()
     if results:
         
         formatted = [
@@ -37,7 +41,8 @@ def get_all_creditunion():
                       'Credit Union': row[1],
                       'Location': row[2], 
                       'Phone Number': row[3], 
-                      'Email': row[4]
+                      'Email': row[4],
+                      'Status': row[5]
                 },
                  'status_code': 200
             }
