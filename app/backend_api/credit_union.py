@@ -36,8 +36,13 @@ def get_all_creditunion():
                 'results': {
                       'id': row[0], 
                       'Credit Union': row[1],
+<<<<<<< HEAD
+                      'Location': row[2], 
+                      'Location_2': row[3],
+=======
                       'address': row[2], 
                       'address_2': row[3],
+>>>>>>> 962d9c1d14beb0f47c004430cb321c239dd3bb60
                       'Phone Number': row[4], 
                       'Email': row[5]
                 },
